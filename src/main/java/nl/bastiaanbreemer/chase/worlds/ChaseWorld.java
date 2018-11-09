@@ -1,19 +1,20 @@
+package nl.bastiaanbreemer.chase.worlds;
 
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.World;
+import nl.bastiaanbreemer.chase.actors.Enemy;
+import nl.bastiaanbreemer.chase.actors.Hero;
+import nl.bastiaanbreemer.chase.utils.Camera;
+import nl.bastiaanbreemer.chase.utils.CollisionEngine;
+import nl.bastiaanbreemer.chase.utils.TileEngine;
 
-/**
- *
- * @author R. Springer
- */
-public class MyWorld extends World {
+public class ChaseWorld extends World {
 
     private CollisionEngine ce;
-    
+
     /**
      * Constructor for objects of class MyWorld.
-     *
      */
-    public MyWorld() {
+    public ChaseWorld() {
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1000, 800, 1, false);
         this.setBackground("bg.png");
@@ -35,31 +36,29 @@ public class MyWorld extends World {
             {10, 10, 6, 6, 6, 6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
             {10, 10, 6, 6, 6, 6, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
         };
-
-        // Declareren en initialiseren van de TileEngine klasse om de map aan de world toe te voegen
+        // Declare and initialization of the TileEngine class to add the map to the world.
         TileEngine te = new TileEngine(this, 60, 60, map);
-        // Declarenre en initialiseren van de camera klasse met de TileEngine klasse 
-        // zodat de camera weet welke tiles allemaal moeten meebewegen met de camera
+        // Declare and initialization of the Camera class with the TileEngine class
+        // passed as a parameter to let the camera know which tiles move along with the Camera.
         Camera camera = new Camera(te);
-        // Declareren en initialiseren van een main karakter van het spel mijne heet Hero. Deze klasse 
-        // moet de klasse Mover extenden voor de camera om te werken
+        // Declare and initialization of the main character of the game mine is called,
+        // Hero. This class needs to be extended by the mover class to work with the Camera class.
         Hero hero = new Hero();
-
-        // Laat de camera een object volgen. Die moet een Mover instatie zijn of een extentie hiervan.
+        // Make the Camera follow a class, the class needs to be a extension of the Mover class.
         camera.follow(hero);
 
-        // Alle objecten toevoegen aan de wereld: camera, main karakter en mogelijke enemies
+        // Adding all objects to the world: Camera, Hero, Enemy.
         addObject(camera, 0, 0);
         addObject(hero, 300, 200);
         addObject(new Enemy(), 1170, 410);
-        
-        // Initialiseren van de CollisionEngine zodat de speler niet door de tile heen kan lopen.
-        // De collision engine kijkt alleen naar de tiles die de variabele solid op true hebben staan.
+
+        // Initializing of the CollisionEngine, this is needed for the Mover classes to not move through the tiles.
+        // The CollisionEngine only looks at the tiles that have the variable solid on false.
         ce = new CollisionEngine(te, camera);
-        // Toevoegen van de mover instantie of een extentie hiervan
+        // Add the Actors that are a extension from the Mover class to the CollisionEngine.
         ce.addCollidingMover(hero);
     }
-        
+
     @Override
     public void act() {
         ce.update();

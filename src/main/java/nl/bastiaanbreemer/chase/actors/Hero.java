@@ -1,5 +1,7 @@
+package nl.bastiaanbreemer.chase.actors;
 
-import greenfoot.*;
+import greenfoot.Actor;
+import greenfoot.Greenfoot;
 
 /**
  *
@@ -22,7 +24,7 @@ public class Hero extends Mover {
     @Override
     public void act() {
         handleInput();
-        
+
         velocityX *= drag;
         velocityY += acc;
         if (velocityY > gravity) {

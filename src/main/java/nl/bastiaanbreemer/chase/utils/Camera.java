@@ -1,18 +1,21 @@
+package nl.bastiaanbreemer.chase.utils;
 
-import greenfoot.*;
+import greenfoot.Actor;
+import greenfoot.Greenfoot;
+import greenfoot.GreenfootImage;
+import nl.bastiaanbreemer.chase.actors.Mover;
 
 /**
- *
  * @author R. Springer
  */
 public class Camera extends Actor {
 
     public static int SPEED = 10;
+    private final TileEngine tileEngine;
     private int width;
     private int height;
     private int maxX;
     private int maxY;
-    private final TileEngine tileEngine;
     private double cameraDrag;
     private double dirX;
     private double dirY;
@@ -22,9 +25,9 @@ public class Camera extends Actor {
     private boolean currentSwitchCameraDown;
 
     /**
-     * The constructor of the Camera class Camera class moves the Tiles and
-     * Mover classes around according to the camera position. Uses the tile
-     * engine to retrieve the tiles to move.
+     * The constructor of the Camera class Camera class moves the Tiles and Mover
+     * classes around according to the camera position. Uses the tile engine to
+     * retrieve the tiles to move.
      *
      * @param tileEngine TileEngine that is used to retrieve the tiles.
      */
@@ -40,12 +43,12 @@ public class Camera extends Actor {
     }
 
     /**
-     * The contructor of the Camera class Camera class moves the Tiles and Mover
+     * The constructor of the Camera class Camera class moves the Tiles and Mover
      * classes around according to the camera position. Uses the tile engine to
      * retrieve the tiles to move.
      *
      * @param tileEngine TileEngine that is used to retrieve te tiles.
-     * @param speed the speed of the movement of the camera (Free movement)
+     * @param speed      the speed of the movement of the camera (Free movement)
      */
     public Camera(TileEngine tileEngine, int speed) {
         this(tileEngine);
@@ -53,10 +56,10 @@ public class Camera extends Actor {
     }
 
     /**
-     * This methode will make this class follow the Mover you give.
+     * This method will make this class follow the Mover you give.
      *
-     * @param mover A Mover class or an extend of it. The Mover class is able to
-     * be followed.
+     * @param mover A Mover class or an extend of it. The Mover class is able to be
+     *              followed.
      */
     public void follow(Mover mover) {
         this.follow = true;
@@ -72,9 +75,9 @@ public class Camera extends Actor {
         int x;
         int y;
 
-        // Als je in debug modus zit kan je met de "e" toets de camera los koppelen
-        // ben besturen met de pijltjes toetsen.
-        if(CollisionEngine.DEBUG) {
+        // If you are in debug mode, you can decouple the camera from the actor with the "e" key.
+        // Then you can control the camera with the arrow keys/
+        if (CollisionEngine.DEBUG) {
             currentSwitchCameraDown = Greenfoot.isKeyDown("e");
             if (currentSwitchCameraDown && !prevSwitchCameraDown) {
                 follow = !follow;
@@ -94,16 +97,14 @@ public class Camera extends Actor {
 
             this.setLocation(x, y);
 
-//          left and right sides
-            if (this.followActor.getX() < this.width / 2
-                    || this.followActor.getX() > this.maxX + this.width / 2) {
+            // left and right sides
+            if (this.followActor.getX() < this.width / 2 || this.followActor.getX() > this.maxX + this.width / 2) {
 
                 this.followActor.screenX = this.followActor.getX() - this.getX();
             }
 
-//          top and bottom sides
-            if (this.followActor.getY() < this.height / 2
-                    || this.followActor.getY() > this.maxY + this.height / 2) {
+            // top and bottom sides
+            if (this.followActor.getY() < this.height / 2 || this.followActor.getY() > this.maxY + this.height / 2) {
                 this.followActor.screenY = this.followActor.getY() - this.getY();
             }
         } else {
@@ -124,8 +125,8 @@ public class Camera extends Actor {
     }
 
     /**
-     * This methode can be used to move the camera around the world. Make sure
-     * you don't move when you are following.
+     * This method can be used to move the camera around the world. Make sure you
+     * don't move when you are following.
      *
      * @param dirX The direction x
      * @param dirY The direction y
@@ -144,11 +145,11 @@ public class Camera extends Actor {
     }
 
     /**
-     * This method will update the Tiles from the engine to match the view. Also
-     * it will update all the Movers classes in the wolrd. So objects move
-     * around with the camera. If an Actor class is added it will not move
-     * around with the camera. It has to be a class that is the Mover or a
-     * extend of the Mover class.
+     * This method will update the Tiles from the engine to match the view. Also it
+     * will update all the Movers classes in the world. So objects move around with
+     * the camera. If an Actor class is added it will not move around with the
+     * camera. It has to be a class that is the Mover or a extend of the Mover
+     * class.
      */
     public void updateView() {
         int startCol = (int) Math.floor(this.getY() / TileEngine.TILE_HEIGHT);

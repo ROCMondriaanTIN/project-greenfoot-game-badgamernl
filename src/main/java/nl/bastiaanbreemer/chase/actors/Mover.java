@@ -1,5 +1,7 @@
+package nl.bastiaanbreemer.chase.actors;
 
 import greenfoot.*;
+import nl.bastiaanbreemer.chase.utils.Camera;
 
 /**
  *
@@ -93,11 +95,7 @@ public class Mover extends Actor {
 
     @Override
     public String toString() {
-        return "X: " + getX() + "\n"
-                + "Y: " + getY() + "\n"
-                + "screenX: " + getScreenX() + "\n"
-                + "screenY: " + getScreenY() + "\n"
-                + "velocityX: " + velocityX + "\n"
-                + "velocityY: " + velocityY + "\n";
+        return "X: " + getX() + "\n" + "Y: " + getY() + "\n" + "screenX: " + getScreenX() + "\n" + "screenY: "
+                + getScreenY() + "\n" + "velocityX: " + velocityX + "\n" + "velocityY: " + velocityY + "\n";
     }
 }

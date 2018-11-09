@@ -1,5 +1,4 @@
-
-import greenfoot.*;
+package nl.bastiaanbreemer.chase.actors;
 
 /**
  *
