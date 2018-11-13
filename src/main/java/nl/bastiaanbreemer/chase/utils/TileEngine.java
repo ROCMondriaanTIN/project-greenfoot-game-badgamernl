@@ -140,12 +140,11 @@ public class TileEngine {
      * @return The tile at the location column and row. Returns null if it cannot
      * find a tile.
      */
-    public Tile getTileAt(int column, int row) {
-        try {
-            return this.generateMap[row][column];
-        } catch (Exception e) {
+    public Tile getTileAt(int colom, int row) {
+        if(row < 0 || row >= MAP_HEIGHT || colom < 0 || colom >= MAP_WIDTH) {
             return null;
         }
+        return this.generateMap[row][colom];
     }
 
     /**
