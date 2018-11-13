@@ -3,7 +3,6 @@ package nl.bastiaanbreemer.chase.utils;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;
-import nl.bastiaanbreemer.chase.actors.Mover;
 
 /**
  * @author R. Springer

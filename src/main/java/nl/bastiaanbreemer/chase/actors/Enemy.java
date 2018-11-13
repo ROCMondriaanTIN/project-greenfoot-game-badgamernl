@@ -1,7 +1,8 @@
 package nl.bastiaanbreemer.chase.actors;
 
+import nl.bastiaanbreemer.chase.utils.Mover;
+
 /**
- *
  * @author R. Springer
  */
 public class Enemy extends Mover {

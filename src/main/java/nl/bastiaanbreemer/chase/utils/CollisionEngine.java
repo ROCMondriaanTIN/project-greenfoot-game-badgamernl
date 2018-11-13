@@ -1,7 +1,6 @@
 package nl.bastiaanbreemer.chase.utils;
 
 import greenfoot.Actor;
-import nl.bastiaanbreemer.chase.actors.Mover;
 
 import java.util.ArrayList;
 import java.util.List;
