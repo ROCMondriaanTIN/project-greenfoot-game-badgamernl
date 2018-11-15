@@ -3,6 +3,7 @@ package nl.bastiaanbreemer.chase.actors;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import nl.bastiaanbreemer.chase.utils.AnimatedMover;
+import nl.bastiaanbreemer.chase.utils.Tile;
 
 public class Chaser extends AnimatedMover {
 
@@ -74,7 +75,13 @@ public class Chaser extends AnimatedMover {
 
 
         if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("space")) {
-            velocityY = -5;
+            int pixelYOffset = (getImage().getHeight() / 2);
+
+            boolean bottomLeft = isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset);
+            boolean bottomMiddle = isTileSolidAtOffset(0, pixelYOffset);
+            boolean bottomRight = isTileSolidAtOffset((getWidth() / 2) - 1, pixelYOffset);
+            if ((bottomLeft || bottomMiddle || bottomRight))
+                velocityY = -10;
         }
 
         if (Greenfoot.isKeyDown("a")) {
@@ -85,16 +92,39 @@ public class Chaser extends AnimatedMover {
             velocityX = isSprinting ? 4 : 2;
         }
 
+        boolean canStand = canStand();
+
         if (Greenfoot.isKeyDown("control")) {
             isCrouching = true;
             isSprinting = false;
-        } else if (Greenfoot.isKeyDown("shift")) {
+        } else if (Greenfoot.isKeyDown("shift") && canStand) {
             isCrouching = false;
             isSprinting = true;
-        } else {
+        } else if (canStand) {
             isCrouching = false;
             isSprinting = false;
+        } else {
+            isCrouching = true;
+            isSprinting = false;
         }
+    }
+
+    private boolean canStand() {
+        if (!isCrouching)
+            return true;
+        int pixelYOffset = (int) (getImage().getHeight() * 1.5 * -1);
+
+        boolean topLeft = isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset);
+        boolean topMiddle = isTileSolidAtOffset(0, pixelYOffset);
+        boolean topRight = isTileSolidAtOffset((getWidth() / 2) - 1, pixelYOffset);
+
+        return !(topLeft || topMiddle || topRight);
+    }
+
+    private boolean isTileSolidAtOffset(int dx, int dy) {
+        Tile tile = (Tile) getOneObjectAtOffset(dx, dy, Tile.class);
+        if (tile == null) return false;
+        return tile.isSolid;
     }
 
     @Override
