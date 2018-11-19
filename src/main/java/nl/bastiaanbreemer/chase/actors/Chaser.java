@@ -23,9 +23,6 @@ public class Chaser extends AnimatedMover {
         acc = 0.2;
         drag = 0.8;
 
-        // Set largest image to be the first
-        setImage("players/p1_walk01.png");
-
         // Adding all animations
         addAnimation("duck");
         addAnimation("front");

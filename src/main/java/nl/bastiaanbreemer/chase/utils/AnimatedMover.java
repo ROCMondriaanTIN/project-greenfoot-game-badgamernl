@@ -53,14 +53,14 @@ public class AnimatedMover extends Mover {
         this.current = animations.get(name);
         // Reset tick to start over
         this.tick = 0;
-        setImage(this.current.getImagePath());
+        setImage(new GreenfootImage(this.current.getImage()));
         return current;
     }
 
     @Override
     public void act() {
         if (current.getSpeed() == 0) {
-            setImage(current.getImagePath(0));
+            setImage(new GreenfootImage(current.getImage(0)));
             GreenfootImage frame = getImage();
             frame.drawRect(0, 0, frame.getWidth() - 1, frame.getHeight() - 1);
             if (mirrorHorizontally)
@@ -72,7 +72,7 @@ public class AnimatedMover extends Mover {
                 tick++;
             } else {
                 tick = 0;
-                setImage(current.nextImage());
+                setImage(new GreenfootImage(current.nextImage()));
                 GreenfootImage frame = getImage();
                 frame.drawRect(0, 0, frame.getWidth() - 1, frame.getHeight() - 1);
                 if (mirrorHorizontally)
@@ -82,5 +82,19 @@ public class AnimatedMover extends Mover {
             }
         }
 
+    }
+
+    protected boolean isTileSolidAtOffset(int dx, int dy) {
+        Tile tile = (Tile) getOneObjectAtOffset(dx, dy, Tile.class);
+        if (tile == null) return false;
+        return tile.isSolid;
+    }
+
+    public int getWidth() {
+        return getImage().getWidth();
+    }
+
+    public int getHeight() {
+        return getImage().getHeight();
     }
 }

@@ -1,16 +1,18 @@
 package nl.bastiaanbreemer.chase.utils;
 
+import greenfoot.GreenfootImage;
+
 public class Animation {
-    private final String[] images;
+    private final GreenfootImage[] images;
     private final String name;
     private int speed;
-    private String current;
+    private GreenfootImage current;
 
     public Animation(String animationPath, String name) {
         this.name = name;
         this.speed = 0;
-        this.images = new String[]{
-            animationPath.replaceFirst("%NAME%", this.name).replaceFirst("%FRAME%", String.format("%02d", 1))};
+        this.images = new GreenfootImage[]{new GreenfootImage(animationPath.replaceFirst("%NAME%", this.name).replaceFirst("%FRAME%", String.format("%02d", 1)))
+        };
         this.current = this.images[0];
         debug();
     }
@@ -18,10 +20,10 @@ public class Animation {
     public Animation(String animationPath, String name, int frames, int speed) {
         this.name = name;
         this.speed = speed;
-        this.images = new String[frames];
+        this.images = new GreenfootImage[frames];
         for (int i = 1; i <= frames; i++) {
-            this.images[i - 1] =
-                animationPath.replaceFirst("%NAME%", this.name).replaceFirst("%FRAME%", String.format("%02d", i));
+            this.images[i - 1] = new GreenfootImage(animationPath.replaceFirst("%NAME%", this.name).replaceFirst("%FRAME%", String.format("%02d", i)))
+            ;
             debug(this.images[i - 1]);
         }
         this.current = this.images[0];
@@ -34,12 +36,12 @@ public class Animation {
         }
     }
 
-    private void debug(String image) {
+    private void debug(GreenfootImage image) {
         System.out.println("-- Animation frame (" + this.name + ")--");
-        System.out.println(image);
+        System.out.println(image.toString());
     }
 
-    public String nextImage() {
+    public GreenfootImage nextImage() {
         // Return current image if there is only one image in the animation.
         if (this.images.length == 1)
             return current;
@@ -62,20 +64,12 @@ public class Animation {
         return this.current;
     }
 
-    public String getImagePath() {
+    public GreenfootImage getImage() {
         return this.images[0];
     }
 
-    public String getImagePath(int index) {
+    public GreenfootImage getImage(int index) {
         return this.images[index];
-    }
-
-    public String[] getImagePaths() {
-        return images;
-    }
-
-    public String getCurrentImagePath() {
-        return current;
     }
 
     public String getName() {
