@@ -3,16 +3,16 @@ package nl.bastiaanbreemer.chase.actors;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import nl.bastiaanbreemer.chase.utils.AnimatedMover;
-import nl.bastiaanbreemer.chase.utils.Tile;
 
 public class Chaser extends AnimatedMover {
 
+    public final static int HEALTH_MAX = 6;
     private final static String ANIMATION_PATH = "players/p1_%NAME%%FRAME%.png";
 
     private final double gravity;
     private final double acc;
     private final double drag;
-
+    private float health = HEALTH_MAX;
     private boolean isCrouching = false;
     private boolean isSprinting = false;
     private int direction = 0;
@@ -32,6 +32,35 @@ public class Chaser extends AnimatedMover {
         addAnimation("walk", 11, 10);
 
         setAnimation("stand");
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void increaseHealth() {
+        if (this.health <= HEALTH_MAX - 0.05)
+            this.health += 0.05;
+    }
+
+    public void decreaseHealth() {
+        if (this.health >= 0.05)
+            this.health -= 0.05;
+    }
+
+
+    public void increaseHealth(float amount) {
+        if (this.health <= HEALTH_MAX - amount)
+            this.health += amount;
+    }
+
+    public void decreaseHealth(float amount) {
+        if (this.health >= amount)
+            this.health -= amount;
     }
 
     public void handleAnimations() {
@@ -118,12 +147,6 @@ public class Chaser extends AnimatedMover {
         return !(topLeft || topMiddle || topRight);
     }
 
-    private boolean isTileSolidAtOffset(int dx, int dy) {
-        Tile tile = (Tile) getOneObjectAtOffset(dx, dy, Tile.class);
-        if (tile == null) return false;
-        return tile.isSolid;
-    }
-
     @Override
     public void act() {
         handleInput();
@@ -143,19 +166,10 @@ public class Chaser extends AnimatedMover {
 
         for (Actor enemy : getIntersectingObjects(Enemy.class)) {
             if (enemy != null) {
-                getWorld().removeObject(this);
+                this.decreaseHealth(0.01f);
                 break;
             }
         }
         getImage().mirrorHorizontally();
     }
-
-    public int getWidth() {
-        return getImage().getWidth();
-    }
-
-    public int getHeight() {
-        return getImage().getHeight();
-    }
-
 }

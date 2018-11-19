@@ -4,10 +4,7 @@ import greenfoot.Greenfoot;
 import greenfoot.World;
 import nl.bastiaanbreemer.chase.actors.Chaser;
 import nl.bastiaanbreemer.chase.actors.Enemy;
-import nl.bastiaanbreemer.chase.utils.Camera;
-import nl.bastiaanbreemer.chase.utils.CollisionEngine;
-import nl.bastiaanbreemer.chase.utils.TileEngine;
-import nl.bastiaanbreemer.chase.utils.TileMapFactory;
+import nl.bastiaanbreemer.chase.utils.*;
 
 public class ChaseWorld extends World {
 
@@ -44,6 +41,8 @@ public class ChaseWorld extends World {
         // Make the Camera follow a class, the class needs to be a extension of the
         // Mover class.
         camera.follow(chaser);
+
+        Overlay overlay = new Overlay(this, chaser);
 
         // Adding all objects to the world: Camera, Hero, Enemy.
         addObject(camera, 0, 0);
