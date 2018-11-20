@@ -4,7 +4,11 @@ import greenfoot.Greenfoot;
 import greenfoot.World;
 import nl.bastiaanbreemer.chase.actors.Chaser;
 import nl.bastiaanbreemer.chase.actors.Enemy;
-import nl.bastiaanbreemer.chase.utils.*;
+import nl.bastiaanbreemer.chase.utils.cameras.Camera;
+import nl.bastiaanbreemer.chase.utils.cameras.Overlay;
+import nl.bastiaanbreemer.chase.utils.engine.CollisionEngine;
+import nl.bastiaanbreemer.chase.utils.engine.TileEngine;
+import nl.bastiaanbreemer.chase.utils.engine.TileMapFactory;
 
 public class ChaseWorld extends World {
 
@@ -31,7 +35,7 @@ public class ChaseWorld extends World {
 
         te.setMap(tmf.getMap());
         // Declare and initialization of the Camera class with the TileEngine class
-        // passed as a parameter to let the camera know which tiles move along with the
+        // passed as a parameter to let the cameras know which tiles move along with the
         // Camera.
         Camera camera = new Camera(te);
         // Declare and initialization of the main character of the game mine is called,

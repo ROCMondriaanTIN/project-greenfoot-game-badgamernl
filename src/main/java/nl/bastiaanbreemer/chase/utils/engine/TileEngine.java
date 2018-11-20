@@ -22,12 +22,12 @@ public class TileEngine {
     private TileFactory tileFactory;
 
     /**
-     * Constructor of the TileEngine
+     * Constuctor of the TileEngine
      *
      * @param world      A World class or a extend of it.
      * @param tileWidth  The width of the tile used in the TileFactory and
      *                   calculations
-     * @param tileHeight The height of the tile used in the TileFactory and
+     * @param tileHeight The heigth of the tile used in the TileFactory and
      *                   calculations
      */
     public TileEngine(World world, int tileWidth, int tileHeight) {
@@ -40,12 +40,12 @@ public class TileEngine {
     }
 
     /**
-     * Constructor of the TileEngine
+     * Constuctor of the TileEngine
      *
      * @param world      A World class or a extend of it.
      * @param tileWidth  The width of the tile used in the TileFactory and
      *                   calculations
-     * @param tileHeight The height of the tile used in the TileFactory and
+     * @param tileHeight The heigth of the tile used in the TileFactory and
      *                   calculations
      * @param map        A tilemap with numbers
      */
@@ -55,10 +55,10 @@ public class TileEngine {
     }
 
     /**
-     * The setMap method used to set a map. This method also clears the previous map
-     * and generates a new one.
+     * The setMap method used to set a map. This method also clears the previous
+     * map and generates a new one.
      *
-     * @param map 2D int array of Tile id's
+     * @param map
      */
     public void setMap(int[][] map) {
         this.clearTilesWorld();
@@ -70,10 +70,10 @@ public class TileEngine {
     }
 
     /**
-     * The setTileFactory sets a tileFactory. You can use this if you want to create
-     * you own tileFactory and use it in the class.
+     * The setTileFactory sets a tilefactory. You can use this if you want to
+     * create you own tilefacory and use it in the class.
      *
-     * @param tf A tileFactory or extend of it.
+     * @param tf A Tilefactory or extend of it.
      */
     public void setTileFactory(TileFactory tf) {
         this.tileFactory = tf;
@@ -95,19 +95,21 @@ public class TileEngine {
      * Creates the tile world based on the TileFactory and the map icons.
      */
     public void generateWorld() {
+        int mapID = 0;
         for (int y = 0; y < MAP_HEIGHT; y++) {
             for (int x = 0; x < MAP_WIDTH; x++) {
-                // Getting number in the int array
+                // Nummer ophalen in de int array
+                mapID++;
                 int mapIcon = this.map[y][x];
-
-                // If the mapIcon is -1 then the code below this if statement is skipped
-                // (-1 tile id is air so no reason to add it because it doesn't have a texture,
-                // the air texture is set in the world class by the background image)
                 if (mapIcon == -1) {
                     continue;
                 }
-
+                // Als de mapIcon -1 is dan wordt de code hieronder overgeslagen
+                // Dus er wordt geen tile aangemaakt. -1 is dus geen tile;
                 Tile createdTile = this.tileFactory.createTile(mapIcon);
+
+                createdTile.setMapID(mapID);
+                createdTile.setMapIcon(mapIcon);
 
                 addTileAt(createdTile, x, y);
             }
@@ -115,33 +117,37 @@ public class TileEngine {
     }
 
     /**
-     * Adds a tile on the column and row. Calculation is based on TILE_WIDTH and
+     * Adds a tile on the colom and row. Calculation is based on TILE_WIDTH and
      * TILE_HEIGHT
      *
-     * @param tile   The Tile
-     * @param column The column where the tile exist in the map
-     * @param row    The row where the tile exist in the map
+     * @param tile  The Tile
+     * @param colom The colom where the tile exist in the map
+     * @param row   The row where the tile exist in the map
      */
-    public void addTileAt(Tile tile, int column, int row) {
-        // The X and Y position are int the middle of the Actor.
-        // The tilemap generates a world based on if there's a X and a Y
-        // in the top left position. That's why half of the width and the height are added,
-        // the X and the Y are in the top left of the Actor before adding it to the object.
-        this.world.addObject(tile, (column * TILE_WIDTH) + TILE_WIDTH / 2, (row * TILE_HEIGHT) + TILE_HEIGHT / 2);
-        // Adding to local array, for ease of use to get a tile from the array based on X and Y position.
-        this.generateMap[row][column] = tile;
+    public void addTileAt(Tile tile, int colom, int row) {
+        // De X en Y positie zitten het midden van de Actor. 
+        // De tilemap genereerd een wereld gebaseerd op dat de X en Y
+        // positie links boven in zitten. Vandaar de we de helft van de 
+        // breedte en hoogte optellen zodat de X en Y links boven zit voor 
+        // het toevoegen van het object.
+        this.world.addObject(tile, (colom * TILE_WIDTH) + TILE_WIDTH / 2, (row * TILE_HEIGHT) + TILE_HEIGHT / 2);
+        // Toevoegen aan onze lokale array. Makkelijk om de tile op te halen
+        // op basis van een x en y positie van de map
+        this.generateMap[row][colom] = tile;
+        tile.setColom(colom);
+        tile.setRow(row);
     }
 
     /**
-     * Retrieves a tile at the location based on column and row in the map
+     * Retrieves a tile at the location based on colom and row in the map
      *
-     * @param column column index
-     * @param row    row index
-     * @return The tile at the location column and row. Returns null if it cannot
+     * @param colom
+     * @param row
+     * @return The tile at the location colom and row. Returns null if it cannot
      * find a tile.
      */
     public Tile getTileAt(int colom, int row) {
-        if(row < 0 || row >= MAP_HEIGHT || colom < 0 || colom >= MAP_WIDTH) {
+        if (row < 0 || row >= MAP_HEIGHT || colom < 0 || colom >= MAP_WIDTH) {
             return null;
         }
         return this.generateMap[row][colom];
@@ -152,7 +158,7 @@ public class TileEngine {
      *
      * @param x X-position in the world
      * @param y Y-position in the world
-     * @return The tile at the location column and row. Returns null if it cannot
+     * @return The tile at the location colom and row. Returns null if it cannot
      * find a tile.
      */
     public Tile getTileAtXY(int x, int y) {
@@ -164,8 +170,57 @@ public class TileEngine {
     }
 
     /**
-     * This method checks if a tile on a x and y position in the world is solid or
-     * not.
+     * Removes tile at the given colom and row
+     *
+     * @param colom
+     * @param row
+     * @return true if the tile has successfully been removed
+     */
+    public boolean removeTileAt(int colom, int row) {
+        if (row < 0 || row >= MAP_HEIGHT || colom < 0 || colom >= MAP_WIDTH) {
+            return false;
+        }
+        Tile tile = this.generateMap[row][colom];
+        if (tile != null) {
+            this.world.removeObject(tile);
+            this.generateMap[row][colom] = null;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes tile at the given x and y position
+     *
+     * @param x X-position in the world
+     * @param y Y-position in the world
+     * @return true if the tile has successfully been removed
+     */
+    public boolean removeTileAtXY(int x, int y) {
+        int col = getColumn(x);
+        int row = getRow(y);
+
+        return removeTileAt(col, row);
+    }
+
+    /**
+     * Removes the tile based on a tile
+     *
+     * @param tile Tile from the tilemap
+     * @return true if the tile has successfully been removed
+     */
+    public boolean removeTile(Tile tile) {
+        int colom = tile.getColom();
+        int row = tile.getRow();
+        if (colom != -1 && row != -1) {
+            return this.removeTileAt(colom, row);
+        }
+        return false;
+    }
+
+    /**
+     * This methode checks if a tile on a x and y position in the world is solid
+     * or not.
      *
      * @param x X-position in the world
      * @param y Y-position in the world
@@ -180,19 +235,19 @@ public class TileEngine {
     }
 
     /**
-     * This method returns a column based on a x position.
+     * This methode returns a colom based on a x position.
      *
-     * @param x column index
-     * @return the column
+     * @param x
+     * @return the colom
      */
     public int getColumn(int x) {
         return (int) Math.floor(x / TILE_WIDTH);
     }
 
     /**
-     * This method returns a row based on a y position.
+     * This methode returns a row based on a y position.
      *
-     * @param y row index
+     * @param y
      * @return the row
      */
     public int getRow(int y) {
@@ -200,9 +255,9 @@ public class TileEngine {
     }
 
     /**
-     * This method returns a x position based on the column
+     * This methode returns a x position based on the colom
      *
-     * @param col col index
+     * @param col
      * @return The x position
      */
     public int getX(int col) {
@@ -210,9 +265,9 @@ public class TileEngine {
     }
 
     /**
-     * This method returns a y position based on the row
+     * This methode returns a y position based on the row
      *
-     * @param row row index
+     * @param row
      * @return The y position
      */
     public int getY(int row) {

@@ -1,6 +1,6 @@
 package nl.bastiaanbreemer.chase.actors;
 
-import nl.bastiaanbreemer.chase.utils.Mover;
+import nl.bastiaanbreemer.chase.utils.engine.Mover;
 
 /**
  * @author R. Springer

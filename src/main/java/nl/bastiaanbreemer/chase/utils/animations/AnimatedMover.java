@@ -90,6 +90,10 @@ public class AnimatedMover extends Mover {
         return tile.isSolid;
     }
 
+    protected float clamp(float val, float min, float max) {
+        return Math.max(min, Math.min(max, val));
+    }
+
     public int getWidth() {
         return getImage().getWidth();
     }

@@ -19,15 +19,29 @@ public class Overlay extends Actor {
     };
     private GreenfootImage[] numbers = new GreenfootImage[10];
 
+    private GreenfootImage bomb = new GreenfootImage("items/bomb01.png");
+
     public Overlay(World world, Chaser parent) {
         this.parent = parent;
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = new GreenfootImage("overlay/hud_" + i + ".png");
         }
+//        bomb.scale(, hearts[0].getWidth());
         // Doing these here (should'nt really by OOP standard but i need the image and this saves allot of mess in ChaseWorld)
         world.addObject(this, world.getWidth() / 2, world.getHeight() / 2);
         // Setting to a empty image with the world dimensions
         this.setImage(new GreenfootImage(world.getWidth(), world.getHeight()));
+    }
+
+    /**
+     * Draws a bomb at the location, specified "x,y" is the top-left of the image
+     *
+     * @param g2d Greenfoot overlay image
+     * @param x   column to draw at
+     * @param y   row to draw at
+     */
+    private void drawBomb(@NotNull GreenfootImage g2d, int x, int y) {
+        g2d.drawImage(bomb, x, y);
     }
 
     /**
@@ -80,6 +94,13 @@ public class Overlay extends Actor {
             int width = numbers[0].getWidth();
             int totalWidth = (str.length() * width) + ((str.length() - 1) * 5);
             drawNumber(g2d, num, (center - totalWidth / 2) + (i * width + 5), 10);
+        }
+
+        int yOffset = g2d.getHeight() - 10 - bomb.getHeight();
+        xOffset = 0;
+        for (int i = 0; i < parent.getBombs(); i++) {
+            drawBomb(g2d, 10 + xOffset, yOffset);
+            xOffset += hearts[0].getWidth() + 5;
         }
 
     }

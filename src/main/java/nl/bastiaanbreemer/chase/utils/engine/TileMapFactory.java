@@ -42,6 +42,9 @@ public class TileMapFactory extends TileFactory {
                     if (name.equals("mirrorVertically")) {
                         tile.mirrorVertically = (boolean) property.get("value");
                     }
+                    if (name.equals("damagePerTick")) {
+                        tile.damagePerTick = Math.toIntExact((Long) property.get("value")) / 1000f;
+                    }
                 }
                 this.tiles.put(Integer.toString(id), tile);
             }
@@ -114,6 +117,7 @@ public class TileMapFactory extends TileFactory {
         boolean isSolid;
         boolean mirrorHorizontally;
         boolean mirrorVertically;
+        float damagePerTick;
 
         public ITile(String image, int width, int height) {
             this.image = image;
@@ -129,6 +133,7 @@ public class TileMapFactory extends TileFactory {
                 tile.getImage().mirrorHorizontally();
             if (mirrorVertically)
                 tile.getImage().mirrorVertically();
+            tile.damagePerTick = damagePerTick;
             return tile;
         }
     }
