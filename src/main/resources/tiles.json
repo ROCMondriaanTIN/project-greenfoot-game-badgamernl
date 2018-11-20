@@ -5610,7 +5610,7 @@
                 {
                  "name":"isSolid",
                  "type":"bool",
-                 "value":false
+                 "value":true
                 }, 
                 {
                  "name":"mirrorHorizontally",
@@ -5638,7 +5638,7 @@
                 {
                  "name":"isSolid",
                  "type":"bool",
-                 "value":false
+                 "value":true
                 }, 
                 {
                  "name":"mirrorHorizontally",

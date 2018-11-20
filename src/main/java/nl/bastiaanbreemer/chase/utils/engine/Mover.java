@@ -1,6 +1,7 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.engine;
 
 import greenfoot.Actor;
+import nl.bastiaanbreemer.chase.utils.cameras.Camera;
 
 /**
  * @author R. Springer
@@ -19,7 +20,7 @@ public class Mover extends Actor {
     private boolean hasCamera;
 
     /**
-     * Methode to set the camera a Mover can have
+     * Methode to set the cameras a Mover can have
      *
      * @param camera A Camera class
      */
@@ -29,7 +30,7 @@ public class Mover extends Actor {
     }
 
     /**
-     * Removes the camera if a camera has been set
+     * Removes the cameras if a cameras has been set
      */
     public void removeCamera() {
         if (hasCamera) {

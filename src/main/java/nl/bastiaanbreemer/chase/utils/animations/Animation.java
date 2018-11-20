@@ -1,4 +1,4 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.animations;
 
 import greenfoot.GreenfootImage;
 
@@ -42,10 +42,10 @@ public class Animation {
     }
 
     public GreenfootImage nextImage() {
-        // Return current image if there is only one image in the animation.
+        // Return current image if there is only one image in the animations.
         if (this.images.length == 1)
             return current;
-        // Find next image in the animation
+        // Find next image in the animations
         for (int i = 0; i < this.images.length; i++) {
             // Check next image if they are not the same.
             if (!this.images[i].equals(current))

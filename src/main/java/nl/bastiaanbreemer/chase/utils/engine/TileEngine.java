@@ -1,6 +1,7 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.engine;
 
 import greenfoot.World;
+import nl.bastiaanbreemer.chase.utils.tiles.Tile;
 
 import java.util.List;
 

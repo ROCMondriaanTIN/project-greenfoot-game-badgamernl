@@ -1804,7 +1804,7 @@
  <tile id="466" type="weight">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
-   <property name="isSolid" type="bool" value="false"/>
+   <property name="isSolid" type="bool" value="true"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
   </properties>
@@ -1813,7 +1813,7 @@
  <tile id="467" type="weight">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
-   <property name="isSolid" type="bool" value="false"/>
+   <property name="isSolid" type="bool" value="true"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
   </properties>

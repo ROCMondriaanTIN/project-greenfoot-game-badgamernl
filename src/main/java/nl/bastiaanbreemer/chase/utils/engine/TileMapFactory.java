@@ -1,5 +1,7 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.engine;
 
+import nl.bastiaanbreemer.chase.utils.tiles.ChaseTile;
+import nl.bastiaanbreemer.chase.utils.tiles.Tile;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,6 +32,7 @@ public class TileMapFactory extends TileFactory {
 //                int width = Math.toIntExact((Long) tileObj.get("imagewidth"));
                 JSONArray tileProperties = (JSONArray) tileObj.get("properties");
                 ITile tile = new ITile(image, TileEngine.TILE_WIDTH, TileEngine.TILE_HEIGHT);
+                tile.type = (String) tileObj.get("type");
                 for (Object propertyObject : tileProperties) {
                     JSONObject property = (JSONObject) propertyObject;
                     String name = (String) property.get("name");
@@ -118,6 +121,7 @@ public class TileMapFactory extends TileFactory {
         boolean mirrorHorizontally;
         boolean mirrorVertically;
         float damagePerTick;
+        String type = "undefined";
 
         public ITile(String image, int width, int height) {
             this.image = image;
@@ -125,8 +129,8 @@ public class TileMapFactory extends TileFactory {
             this.height = height;
         }
 
-        public Tile toTile() {
-            Tile tile = new Tile(this.image, this.width, this.height);
+        public ChaseTile toTile() {
+            ChaseTile tile = new ChaseTile(this.image, this.width, this.height);
             if (isSolid)
                 tile.isSolid = true;
             if (mirrorHorizontally)

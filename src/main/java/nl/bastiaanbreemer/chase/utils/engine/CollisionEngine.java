@@ -1,6 +1,8 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.engine;
 
 import greenfoot.Actor;
+import nl.bastiaanbreemer.chase.utils.cameras.Camera;
+import nl.bastiaanbreemer.chase.utils.tiles.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class CollisionEngine {
      * The constructor of the CollisionEngine.
      *
      * @param tileEngine The TileEngine
-     * @param camera     The camera
+     * @param camera     The cameras
      */
     public CollisionEngine(TileEngine tileEngine, Camera camera) {
         this.tileEngine = tileEngine;
@@ -199,7 +201,7 @@ public class CollisionEngine {
                 collidingTiles.add(tile);
             }
         }
-        
+
         tile = tileEngine.getTileAtXY(midX, top);
         if (tile != null && tile.isSolid) {
             if (!collidingTiles.contains(tile)) {

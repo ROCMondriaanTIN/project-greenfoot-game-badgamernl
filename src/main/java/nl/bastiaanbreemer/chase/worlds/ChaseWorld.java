@@ -3,7 +3,7 @@ package nl.bastiaanbreemer.chase.worlds;
 import greenfoot.Greenfoot;
 import greenfoot.World;
 import nl.bastiaanbreemer.chase.actors.Chaser;
-import nl.bastiaanbreemer.chase.actors.Enemy;
+import nl.bastiaanbreemer.chase.actors.Fly;
 import nl.bastiaanbreemer.chase.utils.cameras.Camera;
 import nl.bastiaanbreemer.chase.utils.cameras.Overlay;
 import nl.bastiaanbreemer.chase.utils.engine.CollisionEngine;
@@ -48,10 +48,11 @@ public class ChaseWorld extends World {
 
         Overlay overlay = new Overlay(this, chaser);
 
-        // Adding all objects to the world: Camera, Hero, Enemy.
+        // Adding all objects to the world: Camera, Hero, Fly.
         addObject(camera, 0, 0);
         addObject(chaser, 300, 200);
-        addObject(new Enemy(), 20 * 72 - 30, 7 * 72);
+        Fly fly = new Fly(chaser);
+        addObject(fly, 10 * TileEngine.TILE_WIDTH, TileEngine.MAP_HEIGHT / 2 * TileEngine.TILE_HEIGHT);
 
         // From what I can find this sets the updates/s
         // Also setting this so the increments in movement can be smaller / more fluent

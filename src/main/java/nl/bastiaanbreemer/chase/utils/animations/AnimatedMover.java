@@ -1,6 +1,8 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.animations;
 
 import greenfoot.GreenfootImage;
+import nl.bastiaanbreemer.chase.utils.engine.Mover;
+import nl.bastiaanbreemer.chase.utils.tiles.Tile;
 
 import java.util.HashMap;
 
@@ -49,7 +51,7 @@ public class AnimatedMover extends Mover {
             if (this.current.equals(animations.get(name)))
                 return this.current;
         }
-        // Change to other animation
+        // Change to other animations
         this.current = animations.get(name);
         // Reset tick to start over
         this.tick = 0;

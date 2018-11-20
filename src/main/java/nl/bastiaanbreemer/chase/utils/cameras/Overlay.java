@@ -1,10 +1,13 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.cameras;
 
 import greenfoot.Actor;
 import greenfoot.GreenfootImage;
 import greenfoot.World;
 import nl.bastiaanbreemer.chase.actors.Chaser;
+import nl.bastiaanbreemer.chase.utils.pickups.Pickup;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class Overlay extends Actor {
 
@@ -12,14 +15,14 @@ public class Overlay extends Actor {
 
     private int tick = 0;
 
+    private GreenfootImage life = new GreenfootImage("overlay/hud_p1Alt.png");
+
     private GreenfootImage[] hearts = new GreenfootImage[]{
         new GreenfootImage("overlay/hud_heartEmpty.png"),
         new GreenfootImage("overlay/hud_heartHalf.png"),
         new GreenfootImage("overlay/hud_heartFull.png")
     };
     private GreenfootImage[] numbers = new GreenfootImage[10];
-
-    private GreenfootImage bomb = new GreenfootImage("items/bomb01.png");
 
     public Overlay(World world, Chaser parent) {
         this.parent = parent;
@@ -31,17 +34,6 @@ public class Overlay extends Actor {
         world.addObject(this, world.getWidth() / 2, world.getHeight() / 2);
         // Setting to a empty image with the world dimensions
         this.setImage(new GreenfootImage(world.getWidth(), world.getHeight()));
-    }
-
-    /**
-     * Draws a bomb at the location, specified "x,y" is the top-left of the image
-     *
-     * @param g2d Greenfoot overlay image
-     * @param x   column to draw at
-     * @param y   row to draw at
-     */
-    private void drawBomb(@NotNull GreenfootImage g2d, int x, int y) {
-        g2d.drawImage(bomb, x, y);
     }
 
     /**
@@ -70,7 +62,17 @@ public class Overlay extends Actor {
 
     private void draw(@NotNull GreenfootImage g2d) {
         g2d.clear();
-        float health = parent.getHealth() * -1;
+
+        drawHearts(g2d, parent.getHealth() * -1);
+
+        drawScore(g2d, String.format("%05d", tick / 120));
+
+        drawPickups(g2d, parent.pickups);
+
+        drawLives(g2d, parent.getLives());
+    }
+
+    private void drawHearts(GreenfootImage g2d, float health) {
         int xOffset = 0;
 
         for (int i = 0; i < Chaser.HEALTH_MAX / 2; i++) {
@@ -85,24 +87,54 @@ public class Overlay extends Actor {
             }
             xOffset += hearts[0].getWidth() + 5;
         }
+    }
 
-        String str = String.format("%05d", tick / 120);
-
-        for (int i = 0; i < str.length(); i++) {
-            int num = Integer.parseInt(Character.toString(str.charAt(i)));
+    private void drawScore(GreenfootImage g2d, String score) {
+        for (int i = 0; i < score.length(); i++) {
+            int num = Integer.parseInt(Character.toString(score.charAt(i)));
             int center = getWorld().getWidth() / 2;
             int width = numbers[0].getWidth();
-            int totalWidth = (str.length() * width) + ((str.length() - 1) * 5);
+            int totalWidth = (score.length() * width) + ((score.length() - 1) * 5);
             drawNumber(g2d, num, (center - totalWidth / 2) + (i * width + 5), 10);
         }
+    }
 
-        int yOffset = g2d.getHeight() - 10 - bomb.getHeight();
-        xOffset = 0;
-        for (int i = 0; i < parent.getBombs(); i++) {
-            drawBomb(g2d, 10 + xOffset, yOffset);
-            xOffset += hearts[0].getWidth() + 5;
+    private void drawPickups(GreenfootImage g2d, ArrayList<Pickup> list) {
+        int xOffset = 10;
+        for (Pickup pickup : list) {
+            GreenfootImage img = new GreenfootImage(pickup.getImage());
+            int yOffset = g2d.getHeight() - 10 - img.getHeight();
+            g2d.drawImage(img, xOffset, yOffset);
+            xOffset += img.getWidth() + 5;
         }
+    }
 
+    private void drawLives(GreenfootImage g2d, int number) {
+        int xOffset = g2d.getWidth() - 10;
+        for (int i = 0; i < number; i++) {
+            drawFromTopRight(g2d, life, xOffset, 10);
+            xOffset -= 5 + life.getWidth();
+        }
+    }
+
+    private void drawFromTopLeft(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+        g2d.drawImage(img, x, y);
+    }
+
+    private void drawFromTopRight(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+        g2d.drawImage(img, x - img.getWidth(), y);
+    }
+
+    private void drawFromBottomLeft(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+        g2d.drawImage(img, x, y - img.getHeight());
+    }
+
+    private void drawFromBottomRight(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+        g2d.drawImage(img, x - img.getWidth(), y - img.getHeight());
+    }
+
+    private void drawFromCenter(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+        g2d.drawImage(img, x - img.getWidth() / 2, y - img.getHeight() / 2);
     }
 
     @Override

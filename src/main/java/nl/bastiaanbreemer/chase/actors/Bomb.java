@@ -1,6 +1,7 @@
 package nl.bastiaanbreemer.chase.actors;
 
 import nl.bastiaanbreemer.chase.utils.animations.AnimatedMover;
+import nl.bastiaanbreemer.chase.utils.animations.Animation;
 
 public class Bomb extends AnimatedMover {
     private final static String ANIMATION_PATH = "items/%NAME%%FRAME%.png";
@@ -16,7 +17,7 @@ public class Bomb extends AnimatedMover {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
 
-        addAnimation("bomb", 2, 1000);
+        addAnimation("bomb", 2, 50);
 
         setAnimation("bomb");
     }
@@ -28,6 +29,7 @@ public class Bomb extends AnimatedMover {
 
     @Override
     public void act() {
+        super.act();
         int height = getHeight() / 2;
         int width = getWidth() / 2;
         boolean topLeft = isTileSolidAtOffset(-width + 1, -height + 1);
@@ -56,8 +58,8 @@ public class Bomb extends AnimatedMover {
         if (update >= 120) {
             update = 0;
             time++;
-            if (time >= TIMEOUT / 2)
-                setAnimation("bomb");
+            Animation animation = getAnimation("bomb");
+            animation.setSpeed(animation.getSpeed() - 1);
             if (time >= TIMEOUT) {
                 this.explode();
             }

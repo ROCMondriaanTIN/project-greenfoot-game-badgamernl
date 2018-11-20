@@ -184,7 +184,7 @@ public class Chaser extends AnimatedMover {
     }
 
     private void handleDamage() {
-        for (Actor enemy : getIntersectingObjects(Enemy.class)) {
+        for (Actor enemy : getIntersectingObjects(Fly.class)) {
             if (enemy != null) {
                 this.decreaseHealth(0.01f);
                 break;

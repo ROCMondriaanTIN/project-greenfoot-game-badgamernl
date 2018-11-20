@@ -1,8 +1,12 @@
-package nl.bastiaanbreemer.chase.utils;
+package nl.bastiaanbreemer.chase.utils.cameras;
 
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;
+import nl.bastiaanbreemer.chase.utils.engine.CollisionEngine;
+import nl.bastiaanbreemer.chase.utils.engine.Mover;
+import nl.bastiaanbreemer.chase.utils.engine.TileEngine;
+import nl.bastiaanbreemer.chase.utils.tiles.Tile;
 
 /**
  * @author R. Springer
@@ -25,7 +29,7 @@ public class Camera extends Actor {
 
     /**
      * The constructor of the Camera class Camera class moves the Tiles and Mover
-     * classes around according to the camera position. Uses the tile engine to
+     * classes around according to the cameras position. Uses the tile engine to
      * retrieve the tiles to move.
      *
      * @param tileEngine TileEngine that is used to retrieve the tiles.
@@ -43,11 +47,11 @@ public class Camera extends Actor {
 
     /**
      * The constructor of the Camera class Camera class moves the Tiles and Mover
-     * classes around according to the camera position. Uses the tile engine to
+     * classes around according to the cameras position. Uses the tile engine to
      * retrieve the tiles to move.
      *
      * @param tileEngine TileEngine that is used to retrieve te tiles.
-     * @param speed      the speed of the movement of the camera (Free movement)
+     * @param speed      the speed of the movement of the cameras (Free movement)
      */
     public Camera(TileEngine tileEngine, int speed) {
         this(tileEngine);
@@ -74,8 +78,8 @@ public class Camera extends Actor {
         int x;
         int y;
 
-        // If you are in debug mode, you can decouple the camera from the actor with the "e" key.
-        // Then you can control the camera with the arrow keys/
+        // If you are in debug mode, you can decouple the cameras from the actor with the "e" key.
+        // Then you can control the cameras with the arrow keys/
         if (CollisionEngine.DEBUG) {
             currentSwitchCameraDown = Greenfoot.isKeyDown("e");
             if (currentSwitchCameraDown && !prevSwitchCameraDown) {
@@ -124,7 +128,7 @@ public class Camera extends Actor {
     }
 
     /**
-     * This method can be used to move the camera around the world. Make sure you
+     * This method can be used to move the cameras around the world. Make sure you
      * don't move when you are following.
      *
      * @param dirX The direction x
@@ -146,8 +150,8 @@ public class Camera extends Actor {
     /**
      * This method will update the Tiles from the engine to match the view. Also it
      * will update all the Movers classes in the world. So objects move around with
-     * the camera. If an Actor class is added it will not move around with the
-     * camera. It has to be a class that is the Mover or a extend of the Mover
+     * the cameras. If an Actor class is added it will not move around with the
+     * cameras. It has to be a class that is the Mover or a extend of the Mover
      * class.
      */
     public void updateView() {
