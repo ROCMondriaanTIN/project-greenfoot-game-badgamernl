@@ -3,6 +3,7 @@ package nl.bastiaanbreemer.chase.utils.cameras;
 import greenfoot.Actor;
 import greenfoot.GreenfootImage;
 import greenfoot.World;
+import nl.bastiaanbreemer.chase.actors.Bomb;
 import nl.bastiaanbreemer.chase.actors.Chaser;
 import nl.bastiaanbreemer.chase.utils.pickups.Pickup;
 import org.jetbrains.annotations.NotNull;
@@ -70,6 +71,13 @@ public class Overlay extends Actor {
         drawPickups(g2d, parent.pickups);
 
         drawLives(g2d, parent.getLives());
+
+        for (Bomb bomb : Bomb.getBombs()) {
+            if (Bomb.TIMEOUT - 1 > bomb.time)
+                continue;
+            g2d.setColor(new greenfoot.Color(255, 0, 0, 50));
+            g2d.fillOval(bomb.screenX - bomb.radius, bomb.screenY - bomb.radius, bomb.radius * 2, bomb.radius * 2);
+        }
     }
 
     private void drawHearts(GreenfootImage g2d, float health) {

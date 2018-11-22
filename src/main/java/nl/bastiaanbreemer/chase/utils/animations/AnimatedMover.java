@@ -5,6 +5,7 @@ import nl.bastiaanbreemer.chase.utils.engine.Mover;
 import nl.bastiaanbreemer.chase.utils.tiles.Tile;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class AnimatedMover extends Mover {
 
@@ -87,9 +88,11 @@ public class AnimatedMover extends Mover {
     }
 
     protected boolean isTileSolidAtOffset(int dx, int dy) {
-        Tile tile = (Tile) getOneObjectAtOffset(dx, dy, Tile.class);
-        if (tile == null) return false;
-        return tile.isSolid;
+        List<Tile> tiles = getObjectsAtOffset(dx, dy, Tile.class);
+        for (Tile tile : tiles) {
+            if (tile.isSolid) return true;
+        }
+        return false;
     }
 
     protected float clamp(float val, float min, float max) {

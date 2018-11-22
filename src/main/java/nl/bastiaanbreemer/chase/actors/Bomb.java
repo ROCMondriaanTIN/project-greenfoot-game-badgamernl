@@ -3,13 +3,18 @@ package nl.bastiaanbreemer.chase.actors;
 import nl.bastiaanbreemer.chase.utils.animations.AnimatedMover;
 import nl.bastiaanbreemer.chase.utils.animations.Animation;
 
+import java.util.ArrayList;
+
 public class Bomb extends AnimatedMover {
+
+    public final static int TIMEOUT = 8;
     private final static String ANIMATION_PATH = "items/%NAME%%FRAME%.png";
-    private final static int TIMEOUT = 8;
+    private static ArrayList<Bomb> bombs = new ArrayList<Bomb>();
+    public final int radius = 125;
     private final float gravity = 5.0f;
     private final float acc = 0.1f;
     private final float drag = 0.5f;
-    private int time = 0;
+    public int time = 0;
     private int update = 0;
 
     public Bomb(double velocityX, double velocityY) {
@@ -20,10 +25,18 @@ public class Bomb extends AnimatedMover {
         addAnimation("bomb", 2, 50);
 
         setAnimation("bomb");
+        bombs.add(this);
+    }
+
+    public static ArrayList<Bomb> getBombs() {
+        return bombs;
     }
 
     private void explode() {
         // TODO: add search radius and decrease health of Chaser inside
+        
+
+        bombs.remove(this);
         getWorld().removeObject(this);
     }
 
