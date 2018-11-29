@@ -65,7 +65,7 @@ public class AnimatedMover extends Mover {
         if (current.getSpeed() == 0) {
             setImage(new GreenfootImage(current.getImage(0)));
             GreenfootImage frame = getImage();
-            frame.drawRect(0, 0, frame.getWidth() - 1, frame.getHeight() - 1);
+            //frame.drawRect(0, 0, frame.getWidth() - 1, frame.getHeight() - 1);
             if (mirrorHorizontally)
                 frame.mirrorHorizontally();
             if (mirrorVertically)
@@ -77,7 +77,7 @@ public class AnimatedMover extends Mover {
                 tick = 0;
                 setImage(new GreenfootImage(current.nextImage()));
                 GreenfootImage frame = getImage();
-                frame.drawRect(0, 0, frame.getWidth() - 1, frame.getHeight() - 1);
+                //frame.drawRect(0, 0, frame.getWidth() - 1, frame.getHeight() - 1);
                 if (mirrorHorizontally)
                     frame.mirrorHorizontally();
                 if (mirrorVertically)
