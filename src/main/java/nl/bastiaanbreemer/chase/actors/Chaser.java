@@ -54,8 +54,8 @@ public class Chaser extends AnimatedMover {
     }
 
     private void setLives(int lives) {
-        if (lives < 0) ChaseApp.application.gameOver();
-        ChaseApp.application.lives = lives;
+        if (lives <= 0) ChaseApp.application.gameOver();
+        else ChaseApp.application.lives = lives;
     }
 
     public void reset() {
@@ -161,6 +161,13 @@ public class Chaser extends AnimatedMover {
         } else {
             isCrouching = true;
             isSprinting = false;
+        }
+
+        if (Greenfoot.isKeyDown("k")) {
+            this.setLives(-1);
+        }
+        if (Greenfoot.isKeyDown("escape")) {
+            System.exit(0);
         }
     }
 
