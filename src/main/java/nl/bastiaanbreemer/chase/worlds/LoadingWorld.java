@@ -14,8 +14,8 @@ public class LoadingWorld extends BaseWorld {
         this.setBackground("bg.png");
 
         this.overlay = new Overlay(this, null);
-
-        ChaseApp.application.state = ChaseApp.State.LOADING;
+        ChaseApp.application.setWorld(this);
+        ChaseApp.application.setState(ChaseApp.State.PLAYING);
     }
 
 

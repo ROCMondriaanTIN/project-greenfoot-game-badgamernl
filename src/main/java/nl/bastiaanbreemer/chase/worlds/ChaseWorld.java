@@ -59,7 +59,8 @@ public class ChaseWorld extends BaseWorld {
         // Add the Actors that are a extension from the Mover class to the
         // CollisionEngine.
         ce.addCollidingMover(chaser);
-        ChaseApp.application.state = ChaseApp.State.PLAYING;
+        ChaseApp.application.setWorld(this);
+        ChaseApp.application.setState(ChaseApp.State.PLAYING);
     }
 
     @Override
