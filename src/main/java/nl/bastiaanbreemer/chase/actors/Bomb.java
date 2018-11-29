@@ -1,5 +1,6 @@
 package nl.bastiaanbreemer.chase.actors;
 
+import greenfoot.GreenfootSound;
 import nl.bastiaanbreemer.chase.utils.animations.AnimatedMover;
 import nl.bastiaanbreemer.chase.utils.animations.Animation;
 
@@ -34,7 +35,7 @@ public class Bomb extends AnimatedMover {
 
     private void explode() {
         // TODO: add search radius and decrease health of Chaser inside
-
+        new GreenfootSound("sounds/small-explosion-" + ((Math.random() <= 0.5) ? 1 : 2) + ".wav").play();
 
         bombs.remove(this);
         getWorld().removeObject(this);
@@ -43,21 +44,40 @@ public class Bomb extends AnimatedMover {
     @Override
     public void act() {
         super.act();
+        if (velocityX > 0)
+            setRotation(getRotation() + 2);
+        else if (velocityX < 0)
+            setRotation(getRotation() - 2);
+        System.out.println(velocityX);
         int height = getHeight() / 2;
         int width = getWidth() / 2;
-        boolean topLeft = isTileSolidAtOffset(-width + 1, -height + 1);
-        boolean topRight = isTileSolidAtOffset(width - 1, -height + 1);
-        boolean bottomLeft = isTileSolidAtOffset(-width + 1, height - 1);
-        boolean bottomRight = isTileSolidAtOffset(width - 1, height - 1);
-        if (bottomLeft && bottomRight && velocityY > 0)
+        boolean topLeft = isTileSolidAtOffset(-width + 2, -height + 2);
+        boolean topRight = isTileSolidAtOffset(width - 2, -height + 2);
+        boolean bottomLeft = isTileSolidAtOffset(-width + 2, height - 2);
+        boolean bottomRight = isTileSolidAtOffset(width - 2, height - 2);
+
+        boolean sideCollision = false;
+        if (bottomLeft && bottomRight && velocityY > 0) {
+            velocityY *= -0.9;
+            sideCollision = true;
+        } else if (topLeft && topRight && velocityY < 0) {
             velocityY *= -1;
-        if (topLeft && topRight && velocityY < 0)
-            velocityY *= -1;
-        if (topRight && bottomRight && velocityX > 0)
-            velocityY *= -1;
-        if (topLeft && bottomLeft && velocityX < 0)
-            velocityY *= -1;
-//        velocityX *= drag;
+            sideCollision = true;
+        } else if (topRight && bottomRight && velocityX > 0) {
+            velocityX *= -1;
+            sideCollision = true;
+        } else if (topLeft && bottomLeft && velocityX < 0) {
+            velocityX *= -1;
+            sideCollision = true;
+        }
+//        if (!sideCollision) {
+//            if (topLeft && velocityX < 0) {
+//                velocityX *= -1;
+//            } else if (topRight && velocityY < 0) {
+//                velocityY *= -1;
+//            }
+//        }
+
         if (velocityX > 1)
             velocityX -= drag;
         else if (velocityX < -1)
