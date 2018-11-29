@@ -36,7 +36,6 @@ public class FontBitMapRenderer {
             } else if (c == (int) '\r') {
                 continue;
             }
-            System.out.println(c - offset - 1 + " " + c + " " + text.charAt(i));
             if (c - offset >= 0 && c - offset <= fontbitmap.length) {
                 GreenfootImage letter = fontbitmap[c - offset];
                 g2d.drawImage(letter, (px + x), (py + y + 1));

@@ -56,8 +56,8 @@ public class Overlay extends Actor {
             drawPickups(g2d, parent.pickups);
 
             drawLives(g2d, ChaseApp.application.getLives());
-
-            fontBitMapRenderer.drawText(g2d, " !@#$%^&*()-_?><{}[]\n|\\//:;\"\'\nABCDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcdefghijklm\nnopqrstuvwxyz", 10, 100);
+//            Debug to test font bit map rendering
+//            fontBitMapRenderer.drawText(g2d, " !@#$%^&*()-_?><{}[]\n|\\//:;\"\'\nABCDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcdefghijklm\nnopqrstuvwxyz", 10, 100);
 
             drawBombDamageRadius(g2d);
         } else if (ChaseApp.application.state == ChaseApp.State.LOADING) {
