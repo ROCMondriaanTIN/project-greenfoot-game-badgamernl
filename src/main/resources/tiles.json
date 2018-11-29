@@ -4598,7 +4598,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/coin-bronze"
         }, 
         {
          "id":430,
@@ -4626,7 +4626,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/coin-gold"
         }, 
         {
          "id":431,
@@ -4654,7 +4654,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/coin-silver"
         }, 
         {
          "id":432,
@@ -5034,7 +5034,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/gem-blue"
         }, 
         {
          "id":446,
@@ -5062,7 +5062,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/gem-green"
         }, 
         {
          "id":447,
@@ -5090,7 +5090,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/gem-red"
         }, 
         {
          "id":448,
@@ -5118,7 +5118,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/gem-yellow"
         }, 
         {
          "id":449,
@@ -5146,7 +5146,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/key-blue"
         }, 
         {
          "id":450,
@@ -5174,7 +5174,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/key-green"
         }, 
         {
          "id":451,
@@ -5202,7 +5202,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/key-red"
         }, 
         {
          "id":452,
@@ -5230,7 +5230,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/key-yellow"
         }, 
         {
          "id":453,
@@ -5510,7 +5510,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/star"
         }, 
         {
          "id":463,
@@ -5678,7 +5678,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"collectable"
+         "type":"pickup\/bomb"
         }],
  "tilewidth":70,
  "type":"tileset",

@@ -3,6 +3,7 @@ package nl.bastiaanbreemer.chase.utils.cameras;
 import greenfoot.Actor;
 import greenfoot.GreenfootImage;
 import greenfoot.World;
+import nl.bastiaanbreemer.chase.ChaseApp;
 import nl.bastiaanbreemer.chase.actors.Bomb;
 import nl.bastiaanbreemer.chase.actors.Chaser;
 import nl.bastiaanbreemer.chase.utils.pickups.Pickup;
@@ -12,10 +13,13 @@ import java.util.ArrayList;
 
 public class Overlay extends Actor {
 
+    public final int WIDTH;
+    public final int HEIGHT;
+
     private Chaser parent;
 
     private int tick = 0;
-
+    private float last_health = Chaser.HEALTH_MAX;
     private GreenfootImage life = new GreenfootImage("overlay/hud_p1Alt.png");
 
     private GreenfootImage[] hearts = new GreenfootImage[]{
@@ -23,55 +27,55 @@ public class Overlay extends Actor {
         new GreenfootImage("overlay/hud_heartHalf.png"),
         new GreenfootImage("overlay/hud_heartFull.png")
     };
-    private GreenfootImage[] numbers = new GreenfootImage[10];
+
+    private FontBitMapRenderer fontBitMapRenderer = new FontBitMapRenderer();
 
     public Overlay(World world, Chaser parent) {
         this.parent = parent;
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = new GreenfootImage("overlay/hud_" + i + ".png");
-        }
 //        bomb.scale(, hearts[0].getWidth());
         // Doing these here (should'nt really by OOP standard but i need the image and this saves allot of mess in ChaseWorld)
         world.addObject(this, world.getWidth() / 2, world.getHeight() / 2);
         // Setting to a empty image with the world dimensions
-        this.setImage(new GreenfootImage(world.getWidth(), world.getHeight()));
+        WIDTH = world.getWidth();
+        HEIGHT = world.getHeight();
+        this.setImage(new GreenfootImage(WIDTH, HEIGHT));
     }
 
-    /**
-     * Draws a number of index (number) at the location, specified "x,y" is the top-left of the image
-     *
-     * @param g2d   Greenfoot overlay image
-     * @param index Of the number, in this case 0-9.
-     * @param x     column to draw at
-     * @param y     row to draw at
-     */
-    private void drawNumber(@NotNull GreenfootImage g2d, int index, int x, int y) {
-        g2d.drawImage(numbers[index], x, y);
-    }
-
-    /**
-     * Draws a heart of index (0: empty, 1: half, 2: full) at the location, specified "x,y" is the top-left of the image
-     *
-     * @param g2d   Greenfoot overlay image
-     * @param index Of the heart image in the hearts array
-     * @param x     column to draw at
-     * @param y     row to draw at
-     */
-    private void drawHeart(@NotNull GreenfootImage g2d, int index, int x, int y) {
-        g2d.drawImage(hearts[index], x, y);
-    }
 
     private void draw(@NotNull GreenfootImage g2d) {
         g2d.clear();
+        // Drawing this first so other elements get drawn over this
 
-        drawHearts(g2d, parent.getHealth() * -1);
+        if (ChaseApp.application.state == ChaseApp.State.PLAYING && parent != null) {
+            drawHurt(g2d);
 
-        drawScore(g2d, String.format("%05d", tick / 120));
+            drawHearts(g2d, (int) parent.getHealth() * -1);
 
-        drawPickups(g2d, parent.pickups);
+            drawScore(g2d, String.format("%05d", tick / 120));
 
-        drawLives(g2d, parent.getLives());
+            drawPickups(g2d, parent.pickups);
 
+            drawLives(g2d, ChaseApp.application.getLives());
+
+            fontBitMapRenderer.drawText(g2d, " !@#$%^&*()-_?><{}[]\n|\\//:;\"\'\nABCDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcdefghijklm\nnopqrstuvwxyz", 10, 100);
+
+            drawBombDamageRadius(g2d);
+        } else if (ChaseApp.application.state == ChaseApp.State.LOADING) {
+            fontBitMapRenderer.drawTextMiddle(g2d, "loading", HEIGHT / 2 - fontBitMapRenderer.letterHeight / 2, WIDTH);
+            fontBitMapRenderer.drawTextMiddle(g2d, "...", HEIGHT / 2 + fontBitMapRenderer.letterHeight / 2, WIDTH);
+        }
+    }
+
+    public void drawHurt(GreenfootImage g2d) {
+        if (parent.getHealth() != last_health) {
+            last_health = parent.getHealth();
+            g2d.setColor(new greenfoot.Color(255, 0, 0, 50));
+            g2d.fillRect(0, 0, WIDTH, HEIGHT);
+        }
+    }
+
+
+    public void drawBombDamageRadius(GreenfootImage g2d) {
         for (Bomb bomb : Bomb.getBombs()) {
             if (Bomb.TIMEOUT - 1 > bomb.time)
                 continue;
@@ -80,7 +84,7 @@ public class Overlay extends Actor {
         }
     }
 
-    private void drawHearts(GreenfootImage g2d, float health) {
+    public void drawHearts(GreenfootImage g2d, int health) {
         int xOffset = 0;
 
         for (int i = 0; i < Chaser.HEALTH_MAX / 2; i++) {
@@ -97,17 +101,11 @@ public class Overlay extends Actor {
         }
     }
 
-    private void drawScore(GreenfootImage g2d, String score) {
-        for (int i = 0; i < score.length(); i++) {
-            int num = Integer.parseInt(Character.toString(score.charAt(i)));
-            int center = getWorld().getWidth() / 2;
-            int width = numbers[0].getWidth();
-            int totalWidth = (score.length() * width) + ((score.length() - 1) * 5);
-            drawNumber(g2d, num, (center - totalWidth / 2) + (i * width + 5), 10);
-        }
+    public void drawScore(GreenfootImage g2d, @NotNull String score) {
+        fontBitMapRenderer.drawTextMiddle(g2d, score, 10, WIDTH);
     }
 
-    private void drawPickups(GreenfootImage g2d, ArrayList<Pickup> list) {
+    public void drawPickups(GreenfootImage g2d, @NotNull ArrayList<Pickup> list) {
         int xOffset = 10;
         for (Pickup pickup : list) {
             GreenfootImage img = new GreenfootImage(pickup.getImage());
@@ -117,7 +115,7 @@ public class Overlay extends Actor {
         }
     }
 
-    private void drawLives(GreenfootImage g2d, int number) {
+    public void drawLives(@NotNull GreenfootImage g2d, int number) {
         int xOffset = g2d.getWidth() - 10;
         for (int i = 0; i < number; i++) {
             drawFromTopRight(g2d, life, xOffset, 10);
@@ -125,23 +123,75 @@ public class Overlay extends Actor {
         }
     }
 
-    private void drawFromTopLeft(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+    /**
+     * Draws a heart of index (0: empty, 1: half, 2: full) at the location, specified "x,y" is the top-left of the image
+     *
+     * @param g2d   Greenfoot overlay image
+     * @param index Of the heart image in the hearts array
+     * @param x     column to draw at
+     * @param y     row to draw at
+     */
+    public void drawHeart(@NotNull GreenfootImage g2d, int index, int x, int y) {
+        g2d.drawImage(hearts[index], x, y);
+    }
+
+    /**
+     * Draw a image with the x,y being in the top left of that image
+     *
+     * @param g2d Greenfoot overlay image
+     * @param img Greenfoot img to draw
+     * @param x   column to draw at
+     * @param y   row to draw at
+     */
+    public void drawFromTopLeft(GreenfootImage g2d, GreenfootImage img, int x, int y) {
         g2d.drawImage(img, x, y);
     }
 
-    private void drawFromTopRight(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+    /**
+     * Draw a image with the x,y being in the top right of that image
+     *
+     * @param g2d Greenfoot overlay image
+     * @param img Greenfoot img to draw
+     * @param x   column to draw at
+     * @param y   row to draw at
+     */
+    public void drawFromTopRight(GreenfootImage g2d, GreenfootImage img, int x, int y) {
         g2d.drawImage(img, x - img.getWidth(), y);
     }
 
-    private void drawFromBottomLeft(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+    /**
+     * Draw a image with the x,y being in the bottom left of that image
+     *
+     * @param g2d Greenfoot overlay image
+     * @param img Greenfoot img to draw
+     * @param x   column to draw at
+     * @param y   row to draw at
+     */
+    public void drawFromBottomLeft(GreenfootImage g2d, GreenfootImage img, int x, int y) {
         g2d.drawImage(img, x, y - img.getHeight());
     }
 
-    private void drawFromBottomRight(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+    /**
+     * Draw a image with the x,y being in the bottom right of that image
+     *
+     * @param g2d Greenfoot overlay image
+     * @param img Greenfoot img to draw
+     * @param x   column to draw at
+     * @param y   row to draw at
+     */
+    public void drawFromBottomRight(GreenfootImage g2d, GreenfootImage img, int x, int y) {
         g2d.drawImage(img, x - img.getWidth(), y - img.getHeight());
     }
 
-    private void drawFromCenter(GreenfootImage g2d, GreenfootImage img, int x, int y) {
+    /**
+     * Draw a image with the x,y being in the center of that image
+     *
+     * @param g2d Greenfoot overlay image
+     * @param img Greenfoot img to draw
+     * @param x   column to draw at
+     * @param y   row to draw at
+     */
+    public void drawFromCenter(GreenfootImage g2d, GreenfootImage img, int x, int y) {
         g2d.drawImage(img, x - img.getWidth() / 2, y - img.getHeight() / 2);
     }
 

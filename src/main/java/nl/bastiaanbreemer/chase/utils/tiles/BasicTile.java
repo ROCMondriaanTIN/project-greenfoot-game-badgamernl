@@ -1,6 +1,7 @@
 package nl.bastiaanbreemer.chase.utils.tiles;
 
 import greenfoot.Actor;
+import greenfoot.GreenfootImage;
 import nl.bastiaanbreemer.chase.utils.engine.CollisionEngine;
 
 /**
@@ -16,6 +17,37 @@ public class BasicTile extends Actor {
     protected int mapID = -1;
     protected int row = -1;
     private int colom = -1;
+
+    /**
+     * Constructor of the tile. Creates a tile based on image, width and height
+     *
+     * @param image  greenfoot image
+     * @param width  Width of the tile
+     * @param heigth Height of the tile
+     */
+    public BasicTile(GreenfootImage image, int width, int heigth) {
+        super();
+        setImage(image);
+        getImage().scale(width, heigth);
+        if (CollisionEngine.DEBUG) {
+            getImage().drawString("ID: " + id, 10, 10);
+        }
+        _id = id;
+        id++;
+    }
+
+    /**
+     * Constructor for the use of a type
+     *
+     * @param image  greenfoot image
+     * @param width  Width of the tile
+     * @param heigth Height of the tile
+     * @param type   The type of the tile
+     */
+    public BasicTile(GreenfootImage image, int width, int heigth, TileType type) {
+        this(image, width, heigth);
+        this.type = type;
+    }
 
     /**
      * Constructor of the tile. Creates a tile based on image, width and height

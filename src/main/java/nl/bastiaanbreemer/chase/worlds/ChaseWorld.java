@@ -1,7 +1,7 @@
 package nl.bastiaanbreemer.chase.worlds;
 
 import greenfoot.Greenfoot;
-import greenfoot.World;
+import nl.bastiaanbreemer.chase.ChaseApp;
 import nl.bastiaanbreemer.chase.actors.Chaser;
 import nl.bastiaanbreemer.chase.actors.Fly;
 import nl.bastiaanbreemer.chase.utils.cameras.Camera;
@@ -9,24 +9,17 @@ import nl.bastiaanbreemer.chase.utils.cameras.Overlay;
 import nl.bastiaanbreemer.chase.utils.engine.CollisionEngine;
 import nl.bastiaanbreemer.chase.utils.engine.TileEngine;
 import nl.bastiaanbreemer.chase.utils.engine.TileMapFactory;
+import nl.bastiaanbreemer.chase.utils.worlds.BaseWorld;
 
-public class ChaseWorld extends World {
+public class ChaseWorld extends BaseWorld {
 
-    private CollisionEngine ce;
-
-    /**
-     * Constructor for objects of class MyWorld.
-     */
     public ChaseWorld() {
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1000, 800, 1, false);
+        super(72 * 14, 72 * 12, 1, false);
         this.setBackground("bg.png");
 
-        // Declare and initialization of the TileEngine class to add the map to the
-        // world.
-        TileEngine te = new TileEngine(this, 72, 72);
-
-        TileMapFactory tmf = new TileMapFactory();
+        te = new TileEngine(this, 72, 72);
+        tmf = new TileMapFactory();
 
         tmf.parseTiles();
         tmf.parseMap("tilemap");
@@ -41,7 +34,7 @@ public class ChaseWorld extends World {
         // Declare and initialization of the main character of the game mine is called,
         // Hero. This class needs to be extended by the mover class to work with the
         // Camera class.
-        Chaser chaser = new Chaser();
+        Chaser chaser = new Chaser(TileEngine.TILE_WIDTH * 5, TileEngine.TILE_HEIGHT * 5);
         // Make the Camera follow a class, the class needs to be a extension of the
         // Mover class.
         camera.follow(chaser);
@@ -66,6 +59,7 @@ public class ChaseWorld extends World {
         // Add the Actors that are a extension from the Mover class to the
         // CollisionEngine.
         ce.addCollidingMover(chaser);
+        ChaseApp.application.state = ChaseApp.State.PLAYING;
     }
 
     @Override

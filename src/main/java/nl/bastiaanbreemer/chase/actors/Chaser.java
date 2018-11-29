@@ -2,6 +2,7 @@ package nl.bastiaanbreemer.chase.actors;
 
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
+import nl.bastiaanbreemer.chase.ChaseApp;
 import nl.bastiaanbreemer.chase.pickups.BombItem;
 import nl.bastiaanbreemer.chase.utils.animations.AnimatedMover;
 import nl.bastiaanbreemer.chase.utils.engine.TileEngine;
@@ -11,14 +12,14 @@ import nl.bastiaanbreemer.chase.utils.tiles.Tile;
 import nl.bastiaanbreemer.chase.worlds.ChaseWorld;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Chaser extends AnimatedMover {
 
     public final static int HEALTH_MAX = 6;
-    public final static int LIVES_MAX = 4;
-    public final static int START_X = TileEngine.TILE_WIDTH * 5;
-    public final static int START_Y = TileEngine.TILE_HEIGHT * 5;
     private final static String ANIMATION_PATH = "players/p1_%NAME%%FRAME%.png";
+    public final int spawnX;
+    public final int spawnY;
     private final double gravity;
     private final double acc;
     private final double drag;
@@ -27,11 +28,14 @@ public class Chaser extends AnimatedMover {
     private boolean isCrouching = false;
     private boolean isSprinting = false;
     private int direction = 0;
-    private int lives = LIVES_MAX;
     private int pickupUseTimeout = 0;
 
-    public Chaser() {
+    public Chaser(int spawnX, int spawnY) {
         super(ANIMATION_PATH);
+
+        this.spawnX = spawnX;
+        this.spawnY = spawnY;
+
         gravity = 5.0;
         acc = 0.2;
         drag = 0.8;
@@ -49,21 +53,14 @@ public class Chaser extends AnimatedMover {
         setAnimation("stand");
     }
 
-    public int getLives() {
-        return lives;
-    }
-
     private void setLives(int lives) {
-        if (lives < 0) gameOver();
-        this.lives = lives;
-    }
-
-    public void gameOver() {
-        Greenfoot.setWorld(new ChaseWorld());
+        if (lives < 0) ChaseApp.application.gameOver();
+        ChaseApp.application.lives = lives;
     }
 
     public void reset() {
-        this.setHealth(HEALTH_MAX);
+        setLocation(this.spawnX, this.spawnY);
+
         this.velocityX = 0;
         this.velocityY = 0;
         this.isCrouching = false;
@@ -74,15 +71,15 @@ public class Chaser extends AnimatedMover {
         pickups.add(new BombItem());
         pickups.add(new BombItem());
 
-        setLocation(START_X, START_Y);
-        setLives(lives - 1);
+        this.setHealth(HEALTH_MAX);
+        setLives(ChaseApp.application.getLives() - 1);
     }
 
     public float getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
     }
 
@@ -131,30 +128,14 @@ public class Chaser extends AnimatedMover {
             }
         }
 
-        if (Greenfoot.isKeyDown("1")) {
-            setAnimation("duck");
-        }
-        if (Greenfoot.isKeyDown("2")) {
-            setAnimation("hurt");
-        }
-        if (Greenfoot.isKeyDown("3")) {
-            setAnimation("jump");
-        }
-        if (Greenfoot.isKeyDown("4")) {
-            setAnimation("stand");
-        }
-        if (Greenfoot.isKeyDown("5")) {
-            setAnimation("walk");
-        }
-
-
-        if (Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("space")) {
+        if ((Greenfoot.isKeyDown("w") && !isCrouching) || (Greenfoot.isKeyDown("space") && !isCrouching)) {
             int pixelYOffset = (getImage().getHeight() / 2);
 
-            boolean bottomLeft = isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset);
-            boolean bottomMiddle = isTileSolidAtOffset(0, pixelYOffset);
-            boolean bottomRight = isTileSolidAtOffset((getWidth() / 2) - 1, pixelYOffset);
-            if ((bottomLeft || bottomMiddle || bottomRight))
+            if (isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset))
+                velocityY = -10;
+            else if (isTileSolidAtOffset(0, pixelYOffset))
+                velocityY = -10;
+            else if (isTileSolidAtOffset((getWidth() / 2) - 1, pixelYOffset))
                 velocityY = -10;
         }
 
@@ -203,21 +184,46 @@ public class Chaser extends AnimatedMover {
             reset();
     }
 
+    private void handlePickup() {
+        List<Tile> tiles = getObjectsAtOffset(0, 0, Tile.class);
+
+        if (tiles.size() <= 0)
+            return;
+
+        for (Tile tile : tiles) {
+            ChaseTile chaseTile = (ChaseTile) tile;
+            String[] types = chaseTile.type.split("/");
+            if (!types[0].equals("pickup"))
+                continue;
+            switch (types[1]) {
+                case "bomb":
+                    ((ChaseWorld) getWorld()).getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
+                    pickups.add(new BombItem());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
     private boolean canStand() {
         if (!isCrouching)
             return true;
         int pixelYOffset = (int) (getImage().getHeight() * 1.5 * -1);
 
-        boolean topLeft = isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset);
-        boolean topMiddle = isTileSolidAtOffset(0, pixelYOffset);
-        boolean topRight = isTileSolidAtOffset((getWidth() / 2) - 1, pixelYOffset);
-
-        return !(topLeft || topMiddle || topRight);
+        if (isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset))
+            return false;
+        else if (isTileSolidAtOffset(0, pixelYOffset))
+            return false;
+        else return !isTileSolidAtOffset((getWidth() / 2) - 1, pixelYOffset);
     }
 
     @Override
     public void act() {
+        handlePickup();
         handleInput();
+        handleDamage();
         handleAnimations();
         if (direction == 0)
             setMirrorHorizontally(true);
@@ -230,7 +236,6 @@ public class Chaser extends AnimatedMover {
             velocityY = gravity;
         }
         applyVelocity();
-        handleDamage();
         getImage().mirrorHorizontally();
     }
 }

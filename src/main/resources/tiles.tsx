@@ -1468,7 +1468,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/chain.png"/>
  </tile>
- <tile id="429" type="collectable">
+ <tile id="429" type="pickup/coin-bronze">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1477,7 +1477,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/coinBronze.png"/>
  </tile>
- <tile id="430" type="collectable">
+ <tile id="430" type="pickup/coin-gold">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1486,7 +1486,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/coinGold.png"/>
  </tile>
- <tile id="431" type="collectable">
+ <tile id="431" type="pickup/coin-silver">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1612,7 +1612,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/flagYellowHanging.png"/>
  </tile>
- <tile id="445" type="collectable">
+ <tile id="445" type="pickup/gem-blue">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1621,7 +1621,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/gemBlue.png"/>
  </tile>
- <tile id="446" type="collectable">
+ <tile id="446" type="pickup/gem-green">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1630,7 +1630,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/gemGreen.png"/>
  </tile>
- <tile id="447" type="collectable">
+ <tile id="447" type="pickup/gem-red">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1639,7 +1639,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/gemRed.png"/>
  </tile>
- <tile id="448" type="collectable">
+ <tile id="448" type="pickup/gem-yellow">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1648,7 +1648,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/gemYellow.png"/>
  </tile>
- <tile id="449" type="collectable">
+ <tile id="449" type="pickup/key-blue">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1657,7 +1657,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/keyBlue.png"/>
  </tile>
- <tile id="450" type="collectable">
+ <tile id="450" type="pickup/key-green">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1666,7 +1666,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/keyGreen.png"/>
  </tile>
- <tile id="451" type="collectable">
+ <tile id="451" type="pickup/key-red">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1675,7 +1675,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/keyRed.png"/>
  </tile>
- <tile id="452" type="collectable">
+ <tile id="452" type="pickup/key-yellow">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1765,7 +1765,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/springboardUp.png"/>
  </tile>
- <tile id="462" type="collectable">
+ <tile id="462" type="pickup/star">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1819,7 +1819,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/weightChained.png"/>
  </tile>
- <tile id="468" type="collectable">
+ <tile id="468" type="pickup/bomb">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>

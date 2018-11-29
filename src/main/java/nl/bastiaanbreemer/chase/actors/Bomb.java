@@ -9,7 +9,7 @@ public class Bomb extends AnimatedMover {
 
     public final static int TIMEOUT = 8;
     private final static String ANIMATION_PATH = "items/%NAME%%FRAME%.png";
-    private static ArrayList<Bomb> bombs = new ArrayList<Bomb>();
+    private static ArrayList<Bomb> bombs = new ArrayList<>();
     public final int radius = 125;
     private final float gravity = 5.0f;
     private final float acc = 0.1f;
@@ -34,7 +34,7 @@ public class Bomb extends AnimatedMover {
 
     private void explode() {
         // TODO: add search radius and decrease health of Chaser inside
-        
+
 
         bombs.remove(this);
         getWorld().removeObject(this);
