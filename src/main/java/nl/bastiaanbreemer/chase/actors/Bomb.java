@@ -1,8 +1,10 @@
 package nl.bastiaanbreemer.chase.actors;
 
 import greenfoot.GreenfootSound;
+import nl.bastiaanbreemer.chase.ChaseApp;
 import nl.bastiaanbreemer.chase.utils.animations.AnimatedMover;
 import nl.bastiaanbreemer.chase.utils.animations.Animation;
+import nl.bastiaanbreemer.chase.utils.tiles.ChaseTile;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,15 @@ public class Bomb extends AnimatedMover {
         // TODO: add search radius and decrease health of Chaser inside
         new GreenfootSound("sounds/small-explosion-" + ((Math.random() <= 0.5) ? 1 : 2) + ".wav").play();
 
+        for (ChaseTile tile : getObjectsInRange(this.radius, ChaseTile.class)) {
+            if (tile.isSolid)
+                ChaseApp.application.world.getTileEngine().removeTile(tile);
+        }
+
+        for (Chaser chaser : getObjectsInRange(this.radius, Chaser.class)) {
+            chaser.reset();
+        }
+
         bombs.remove(this);
         getWorld().removeObject(this);
     }
@@ -44,39 +55,22 @@ public class Bomb extends AnimatedMover {
     @Override
     public void act() {
         super.act();
-        if (velocityX > 0)
-            setRotation(getRotation() + 2);
-        else if (velocityX < 0)
-            setRotation(getRotation() - 2);
-        System.out.println(velocityX);
+        setRotation(getRotation() + (int) velocityX);
         int height = getHeight() / 2;
         int width = getWidth() / 2;
-        boolean topLeft = isTileSolidAtOffset(-width + 2, -height + 2);
-        boolean topRight = isTileSolidAtOffset(width - 2, -height + 2);
-        boolean bottomLeft = isTileSolidAtOffset(-width + 2, height - 2);
-        boolean bottomRight = isTileSolidAtOffset(width - 2, height - 2);
 
-        boolean sideCollision = false;
-        if (bottomLeft && bottomRight && velocityY > 0) {
-            velocityY *= -0.9;
-            sideCollision = true;
-        } else if (topLeft && topRight && velocityY < 0) {
+        boolean top = isTileSolidAtOffset(0, -height + 2);
+        boolean bottom = isTileSolidAtOffset(0, height - 2);
+        if ((top && velocityY < 0)) {
             velocityY *= -1;
-            sideCollision = true;
-        } else if (topRight && bottomRight && velocityX > 0) {
-            velocityX *= -1;
-            sideCollision = true;
-        } else if (topLeft && bottomLeft && velocityX < 0) {
-            velocityX *= -1;
-            sideCollision = true;
+        } else if ((bottom && velocityY > 0)) {
+            velocityY *= -0.9; // make it bounce less when going up so it stops bouncing gradually
         }
-//        if (!sideCollision) {
-//            if (topLeft && velocityX < 0) {
-//                velocityX *= -1;
-//            } else if (topRight && velocityY < 0) {
-//                velocityY *= -1;
-//            }
-//        }
+        boolean left = isTileSolidAtOffset(-width + 2, 0);
+        boolean right = isTileSolidAtOffset(width - 2, 0);
+        if ((left && velocityX < 0) || (right && velocityX > 0)) {
+            velocityX *= -1;
+        }
 
         if (velocityX > 1)
             velocityX -= drag;
