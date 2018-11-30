@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.0" name="tiles" tilewidth="70" tileheight="70" tilecount="203" columns="0">
+<tileset version="1.2" tiledversion="1.2.1" name="tiles" tilewidth="70" tileheight="70" tilecount="203" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="266" type="box">
   <properties>
@@ -723,7 +723,7 @@
  </tile>
  <tile id="346" type="fluid">
   <properties>
-   <property name="damagePerTick" type="int" value="50"/>
+   <property name="damagePerTick" type="int" value="200"/>
    <property name="isSolid" type="bool" value="false"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
@@ -732,7 +732,7 @@
  </tile>
  <tile id="347" type="fluid">
   <properties>
-   <property name="damagePerTick" type="int" value="50"/>
+   <property name="damagePerTick" type="int" value="200"/>
    <property name="isSolid" type="bool" value="false"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
@@ -741,7 +741,7 @@
  </tile>
  <tile id="348" type="fluid">
   <properties>
-   <property name="damagePerTick" type="int" value="50"/>
+   <property name="damagePerTick" type="int" value="200"/>
    <property name="isSolid" type="bool" value="false"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
@@ -750,7 +750,7 @@
  </tile>
  <tile id="349" type="fluid">
   <properties>
-   <property name="damagePerTick" type="int" value="10"/>
+   <property name="damagePerTick" type="int" value="100"/>
    <property name="isSolid" type="bool" value="false"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
@@ -759,7 +759,7 @@
  </tile>
  <tile id="350" type="fluid">
   <properties>
-   <property name="damagePerTick" type="int" value="10"/>
+   <property name="damagePerTick" type="int" value="100"/>
    <property name="isSolid" type="bool" value="false"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
@@ -768,7 +768,7 @@
  </tile>
  <tile id="351" type="fluid">
   <properties>
-   <property name="damagePerTick" type="int" value="10"/>
+   <property name="damagePerTick" type="int" value="100"/>
    <property name="isSolid" type="bool" value="false"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>
@@ -1740,7 +1740,7 @@
  </tile>
  <tile id="459" type="spike">
   <properties>
-   <property name="damagePerTick" type="int" value="10"/>
+   <property name="damagePerTick" type="int" value="200"/>
    <property name="isSolid" type="bool" value="false"/>
    <property name="mirrorHorizontally" type="bool" value="false"/>
    <property name="mirrorVertically" type="bool" value="false"/>

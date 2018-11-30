@@ -29,6 +29,7 @@ public class Chaser extends AnimatedMover {
     private boolean isSprinting = false;
     private int direction = 0;
     private int pickupUseTimeout = 0;
+    private int tick = 0;
 
     public Chaser(int spawnX, int spawnY) {
         super(ANIMATION_PATH);
@@ -172,12 +173,6 @@ public class Chaser extends AnimatedMover {
     }
 
     private void handleDamage() {
-        for (Actor enemy : getIntersectingObjects(Fly.class)) {
-            if (enemy != null) {
-                this.decreaseHealth(0.01f);
-                break;
-            }
-        }
         for (Actor actor : getIntersectingObjects(Tile.class)) {
             if (actor != null) {
                 ChaseTile tile = (ChaseTile) actor;
@@ -211,7 +206,6 @@ public class Chaser extends AnimatedMover {
                     break;
             }
         }
-
     }
 
     private boolean canStand() {
@@ -228,9 +222,11 @@ public class Chaser extends AnimatedMover {
 
     @Override
     public void act() {
+        tick++;
         handlePickup();
         handleInput();
-        handleDamage();
+        if (tick % 30 == 0)
+            handleDamage();
         handleAnimations();
         if (direction == 0)
             setMirrorHorizontally(true);
@@ -242,6 +238,8 @@ public class Chaser extends AnimatedMover {
         if (velocityY > gravity) {
             velocityY = gravity;
         }
+        if (tick % 60 == 0)
+            handleSound();
         applyVelocity();
         getImage().mirrorHorizontally();
     }

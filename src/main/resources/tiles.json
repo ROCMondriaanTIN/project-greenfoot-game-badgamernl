@@ -9,7 +9,7 @@
  "name":"tiles",
  "spacing":0,
  "tilecount":203,
- "tiledversion":"1.2.0",
+ "tiledversion":"1.2.1",
  "tileheight":70,
  "tiles":[
         {
@@ -2261,7 +2261,7 @@
                 {
                  "name":"damagePerTick",
                  "type":"int",
-                 "value":50
+                 "value":200
                 }, 
                 {
                  "name":"isSolid",
@@ -2289,7 +2289,7 @@
                 {
                  "name":"damagePerTick",
                  "type":"int",
-                 "value":50
+                 "value":200
                 }, 
                 {
                  "name":"isSolid",
@@ -2317,7 +2317,7 @@
                 {
                  "name":"damagePerTick",
                  "type":"int",
-                 "value":50
+                 "value":200
                 }, 
                 {
                  "name":"isSolid",
@@ -2345,7 +2345,7 @@
                 {
                  "name":"damagePerTick",
                  "type":"int",
-                 "value":10
+                 "value":100
                 }, 
                 {
                  "name":"isSolid",
@@ -2373,7 +2373,7 @@
                 {
                  "name":"damagePerTick",
                  "type":"int",
-                 "value":10
+                 "value":100
                 }, 
                 {
                  "name":"isSolid",
@@ -2401,7 +2401,7 @@
                 {
                  "name":"damagePerTick",
                  "type":"int",
-                 "value":10
+                 "value":100
                 }, 
                 {
                  "name":"isSolid",
@@ -5409,7 +5409,7 @@
                 {
                  "name":"damagePerTick",
                  "type":"int",
-                 "value":10
+                 "value":200
                 }, 
                 {
                  "name":"isSolid",
