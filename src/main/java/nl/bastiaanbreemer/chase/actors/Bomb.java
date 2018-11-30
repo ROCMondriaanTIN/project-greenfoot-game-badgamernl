@@ -37,7 +37,9 @@ public class Bomb extends AnimatedMover {
 
     private void explode() {
         // TODO: add search radius and decrease health of Chaser inside
-        new GreenfootSound("sounds/small-explosion-" + ((Math.random() <= 0.5) ? 1 : 2) + ".wav").play();
+        GreenfootSound boom = new GreenfootSound("sounds/small-explosion-" + ((Math.random() <= 0.5) ? 1 : 2) + ".wav");
+        boom.setVolume(10);
+        boom.play();
 
         for (ChaseTile tile : getObjectsInRange(this.radius, ChaseTile.class)) {
             if (tile.isSolid)

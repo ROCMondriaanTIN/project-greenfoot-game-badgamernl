@@ -220,6 +220,30 @@ public class Chaser extends AnimatedMover {
         else return !isTileSolidAtOffset((getWidth() / 2) - 1, pixelYOffset);
     }
 
+    private void handleSound() {
+        if (velocityX != 0)
+            for (ChaseTile tile : getObjectsAtOffset(0, getHeight() / 2, ChaseTile.class)) {
+                if (!tile.isSolid) continue;
+                switch (tile.type) {
+                    case "grass":
+                        Greenfoot.playSound("sounds/walking/grass-0" + ((Math.random() <= 0.5) ? 2 : 3) + ".wav");
+                        break;
+                    case "sand":
+                    case "snow":
+                        Greenfoot.playSound("sounds/walking/sand-0" + ((Math.random() <= 0.5) ? 2 : 3) + ".wav");
+                        break;
+                    case "stone":
+                    case "bridge":
+                    case "box":
+                        Greenfoot.playSound("sounds/walking/concrete-0" + ((Math.random() <= 0.5) ? 2 : 3) + ".wav");
+                        break;
+                    default:
+                        Greenfoot.playSound("sounds/walking/dirt-0" + ((Math.random() <= 0.5) ? 2 : 3) + ".wav");
+                        break;
+                }
+            }
+    }
+
     @Override
     public void act() {
         tick++;
