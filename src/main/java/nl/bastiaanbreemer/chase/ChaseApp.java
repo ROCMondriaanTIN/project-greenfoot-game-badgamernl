@@ -4,7 +4,6 @@ import greenfoot.Greenfoot;
 import greenfoot.export.GreenfootScenarioMain;
 import nl.bastiaanbreemer.chase.utils.worlds.BaseWorld;
 import nl.bastiaanbreemer.chase.worlds.ChaseWorld;
-import nl.bastiaanbreemer.chase.worlds.LoadingWorld;
 
 public class ChaseApp extends GreenfootScenarioMain {
     public final static int LIVES_MAX = 4;
@@ -20,7 +19,7 @@ public class ChaseApp extends GreenfootScenarioMain {
 
     public void gameOver() {
         lives = LIVES_MAX;
-        new LoadingWorld();
+//        new LoadingWorld();
         new ChaseWorld();
     }
 

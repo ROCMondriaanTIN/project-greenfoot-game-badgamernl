@@ -6,6 +6,7 @@ import nl.bastiaanbreemer.chase.actors.Chaser;
 import nl.bastiaanbreemer.chase.actors.Fly;
 import nl.bastiaanbreemer.chase.utils.cameras.Camera;
 import nl.bastiaanbreemer.chase.utils.cameras.Overlay;
+import nl.bastiaanbreemer.chase.utils.cameras.ParallaxBackground;
 import nl.bastiaanbreemer.chase.utils.engine.CollisionEngine;
 import nl.bastiaanbreemer.chase.utils.engine.TileEngine;
 import nl.bastiaanbreemer.chase.utils.engine.TileMapFactory;
@@ -16,10 +17,11 @@ public class ChaseWorld extends BaseWorld {
     public ChaseWorld() {
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(72 * 14, 72 * 12, 1, false);
-        this.setBackground("bg.png");
 
         te = new TileEngine(this, 72, 72);
         tmf = new TileMapFactory();
+
+        pb = new ParallaxBackground(this, "parallax-background_01.png");
 
         tmf.parseTiles();
         tmf.parseMap("tilemap");
@@ -27,6 +29,7 @@ public class ChaseWorld extends BaseWorld {
         te.setTileFactory(tmf);
 
         te.setMap(tmf.getMap());
+        pb.updateMap();
         // Declare and initialization of the Camera class with the TileEngine class
         // passed as a parameter to let the cameras know which tiles move along with the
         // Camera.
@@ -38,7 +41,7 @@ public class ChaseWorld extends BaseWorld {
         // Make the Camera follow a class, the class needs to be a extension of the
         // Mover class.
         camera.follow(chaser);
-
+        pb.setParent(chaser);
         Overlay overlay = new Overlay(this, chaser);
 
         // Adding all objects to the world: Camera, Hero, Fly.
