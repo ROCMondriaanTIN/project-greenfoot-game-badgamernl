@@ -61,15 +61,15 @@ public class Bomb extends AnimatedMover {
         int height = getHeight() / 2;
         int width = getWidth() / 2;
 
-        boolean top = isTileSolidAtOffset(0, -height + 2);
-        boolean bottom = isTileSolidAtOffset(0, height - 2);
+        boolean top = isTileSolidAtOffset(0, -height + 7);
+        boolean bottom = isTileSolidAtOffset(0, height - 7);
         if ((top && velocityY < 0)) {
             velocityY *= -1;
         } else if ((bottom && velocityY > 0)) {
             velocityY *= -0.9; // make it bounce less when going up so it stops bouncing gradually
         }
-        boolean left = isTileSolidAtOffset(-width + 2, 0);
-        boolean right = isTileSolidAtOffset(width - 2, 0);
+        boolean left = isTileSolidAtOffset(-width + 7, 0);
+        boolean right = isTileSolidAtOffset(width - 7, 0);
         if ((left && velocityX < 0) || (right && velocityX > 0)) {
             velocityX *= -1;
         }
