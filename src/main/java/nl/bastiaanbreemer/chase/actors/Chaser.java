@@ -268,3 +268,5 @@ public class Chaser extends AnimatedMover {
         getImage().mirrorHorizontally();
     }
 }
+
+// hallo dit is Gijs zijn code
