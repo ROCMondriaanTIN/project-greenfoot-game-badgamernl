@@ -14,7 +14,7 @@ public class Bomb extends AnimatedMover {
     private final static String ANIMATION_PATH = "items/%NAME%%FRAME%.png";
     private static ArrayList<Bomb> bombs = new ArrayList<>();
     public final int radius = 125;
-    private final float gravity = 5.0f;
+    private final float gravity = 10.0f;
     private final float acc = 0.1f;
     private final float drag = 0.5f;
     public int time = 0;
