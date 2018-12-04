@@ -15,8 +15,8 @@ public class ParallaxBackground extends Actor {
     private final GreenfootImage image;
     private double mapWidth;
     private double mapHeight;
-    private int prevParentX;
-    private int prevParentY;
+    private double prevParentX;
+    private double prevParentY;
     private Chaser parent;
 
     public ParallaxBackground(World world, String image) {
@@ -42,32 +42,38 @@ public class ParallaxBackground extends Actor {
     private void draw(GreenfootImage g2d) {
         if (parent == null)
             return;
-        double topLeft = parent.getX() - WIDTH / 2;
-        double topRight = parent.getX() + WIDTH / 2;
+
+        double halfWidth = WIDTH / 2;
+        double halfHeight = HEIGHT / 2;
+        // Get parent pos clamped to the inner world dimensions because camera x,y is private.
+        double px = clamp(parent.getX(), halfWidth, mapWidth - halfWidth);
+        double py = clamp(parent.getY(), halfHeight, mapHeight - halfHeight);
+
         double imagesX = Math.ceil(mapWidth / BG_WIDTH);
-        int parentX = getParentLeft();
-        int parentY = getParentTop();
-        if (parentX == prevParentX && parentY == prevParentY) {
+        double imagesY = Math.ceil(mapHeight / BG_HEIGHT);
+        if (px == prevParentX && py == prevParentY) {
             return;
         }
-
-        for (int i = 0; i < imagesX; i++) {
-            double imageX = i * BG_WIDTH;
-            if (imageX > topLeft && imageX + BG_WIDTH < topRight)
-                continue;
-            double offsetX = imageX - parentX;
-            g2d.drawImage(image, (int) offsetX, 0);
+        for (int y = 0; y < imagesY; y++) {
+            for (int x = 0; x < imagesX; x++) {
+                double imageX = x * BG_WIDTH;
+                double imageY = y * BG_HEIGHT;
+                // Check if image is out of vision.
+                if (imageX > px - WIDTH / 2 && imageX + BG_WIDTH < px + WIDTH / 2)
+                    continue;
+                if (imageY > py + HEIGHT / 2 && imagesY + BG_HEIGHT < py - HEIGHT / 2)
+                    continue;
+                double offsetX = imageX - px - (double) parent.getWidth() / 2;
+                double offsetY = imageY - py - (double) parent.getHeight() / 2;
+                g2d.drawImage(image, (int) offsetX, (int) offsetY);
+            }
         }
-        prevParentX = parentX;
-        prevParentY = parentY;
+        prevParentX = px;
+        prevParentY = py;
     }
 
-    private int getParentLeft() {
-        return parent.getX() - (parent.getWidth() / 2);
-    }
-
-    private int getParentTop() {
-        return parent.getY() - (parent.getHeight() / 2);
+    protected double clamp(double val, double min, double max) {
+        return Math.max(min, Math.min(max, val));
     }
 
     @Override
