@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tiles",
  "spacing":0,
- "tilecount":203,
+ "tilecount":207,
  "tiledversion":"1.2.1",
  "tileheight":70,
  "tiles":[
@@ -5679,6 +5679,118 @@
                  "value":false
                 }],
          "type":"pickup\/bomb"
+        }, 
+        {
+         "id":469,
+         "image":"images\/tiles\/castleCenterDark.png",
+         "imageheight":70,
+         "imagewidth":70,
+         "properties":[
+                {
+                 "name":"damagePerTick",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"isSolid",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorHorizontally",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorVertically",
+                 "type":"bool",
+                 "value":false
+                }],
+         "type":"background"
+        }, 
+        {
+         "id":470,
+         "image":"images\/tiles\/grassCenterDark.png",
+         "imageheight":70,
+         "imagewidth":70,
+         "properties":[
+                {
+                 "name":"damagePerTick",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"isSolid",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorHorizontally",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorVertically",
+                 "type":"bool",
+                 "value":false
+                }],
+         "type":"background"
+        }, 
+        {
+         "id":471,
+         "image":"images\/tiles\/sandCenterDark.png",
+         "imageheight":70,
+         "imagewidth":70,
+         "properties":[
+                {
+                 "name":"damagePerTick",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"isSolid",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorHorizontally",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorVertically",
+                 "type":"bool",
+                 "value":false
+                }],
+         "type":"background"
+        }, 
+        {
+         "id":472,
+         "image":"images\/tiles\/stoneCenterDark.png",
+         "imageheight":70,
+         "imagewidth":70,
+         "properties":[
+                {
+                 "name":"damagePerTick",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"isSolid",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorHorizontally",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"mirrorVertically",
+                 "type":"bool",
+                 "value":false
+                }],
+         "type":"background"
         }],
  "tilewidth":70,
  "type":"tileset",

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.1" name="tiles" tilewidth="70" tileheight="70" tilecount="203" columns="0">
+<tileset version="1.2" tiledversion="1.2.1" name="tiles" tilewidth="70" tileheight="70" tilecount="207" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="266" type="box">
   <properties>
@@ -1827,5 +1827,41 @@
    <property name="mirrorVertically" type="bool" value="false"/>
   </properties>
   <image width="70" height="70" source="images/tiles/bomb.png"/>
+ </tile>
+ <tile id="469" type="background">
+  <properties>
+   <property name="damagePerTick" type="int" value="0"/>
+   <property name="isSolid" type="bool" value="false"/>
+   <property name="mirrorHorizontally" type="bool" value="false"/>
+   <property name="mirrorVertically" type="bool" value="false"/>
+  </properties>
+  <image width="70" height="70" source="images/tiles/castleCenterDark.png"/>
+ </tile>
+ <tile id="470" type="background">
+  <properties>
+   <property name="damagePerTick" type="int" value="0"/>
+   <property name="isSolid" type="bool" value="false"/>
+   <property name="mirrorHorizontally" type="bool" value="false"/>
+   <property name="mirrorVertically" type="bool" value="false"/>
+  </properties>
+  <image width="70" height="70" source="images/tiles/grassCenterDark.png"/>
+ </tile>
+ <tile id="471" type="background">
+  <properties>
+   <property name="damagePerTick" type="int" value="0"/>
+   <property name="isSolid" type="bool" value="false"/>
+   <property name="mirrorHorizontally" type="bool" value="false"/>
+   <property name="mirrorVertically" type="bool" value="false"/>
+  </properties>
+  <image width="70" height="70" source="images/tiles/sandCenterDark.png"/>
+ </tile>
+ <tile id="472" type="background">
+  <properties>
+   <property name="damagePerTick" type="int" value="0"/>
+   <property name="isSolid" type="bool" value="false"/>
+   <property name="mirrorHorizontally" type="bool" value="false"/>
+   <property name="mirrorVertically" type="bool" value="false"/>
+  </properties>
+  <image width="70" height="70" source="images/tiles/stoneCenterDark.png"/>
  </tile>
 </tileset>
