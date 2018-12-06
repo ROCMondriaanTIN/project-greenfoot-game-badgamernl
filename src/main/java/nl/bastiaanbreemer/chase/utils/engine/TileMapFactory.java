@@ -14,51 +14,46 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class TileMapFactory extends TileFactory {
-    private HashMap<String, ITile> tiles = new HashMap<String, ITile>();
+    private static HashMap<String, ITile> tiles = new HashMap<String, ITile>();
 
     private int[][] map;
 
     public void parseTiles() {
+        if (TileMapFactory.tiles.size() > 0) {
+            System.out.println("[INFO] parseTiles() tiles already parsed");
+            return;
+        }
         System.out.println("[START] parseTiles()");
-        JSONParser parser = new JSONParser();
         try {
-            // json simple can't read resource streams
-            InputStream stream = this.getClass().getClassLoader().getResourceAsStream("tiles.json");
-            if (stream == null)
-                throw new Exception("getResourceAsStream() returned null");
-            String result = new BufferedReader(new InputStreamReader(stream))
-                .lines().collect(Collectors.joining("\n"));
-            JSONObject tilesDataObj = (JSONObject) parser.parse(result);
-            JSONArray jsonTiles = (JSONArray) tilesDataObj.get("tiles");
-            for (Object tileObject : jsonTiles) {
-                JSONObject tileObj = (JSONObject) tileObject;
-                int id = Math.toIntExact((Long) tileObj.get("id"));
-                String image = (String) tileObj.get("image");
-//                int height = Math.toIntExact((Long) tileObj.get("imageheight"));
-//                int width = Math.toIntExact((Long) tileObj.get("imagewidth"));
-                JSONArray tileProperties = (JSONArray) tileObj.get("properties");
-                ITile tile = new ITile(image, TileEngine.TILE_WIDTH, TileEngine.TILE_HEIGHT);
-                tile.type = (String) tileObj.get("type");
+            JSONObject tiles = parseFileToJSONObject("tiles.json");
+            JSONArray tilesArr = (JSONArray) tiles.get("tiles");
+            for (Object tileObj : tilesArr) {
+                JSONObject tile = (JSONObject) tileObj;
+                int id = objToInt(tile.get("id"));
+                String image = (String) tile.get("image");
+                JSONArray tileProperties = (JSONArray) tile.get("properties");
+                ITile iTile = new ITile(image, TileEngine.TILE_WIDTH, TileEngine.TILE_HEIGHT);
+                iTile.type = (String) tile.get("type");
                 for (Object propertyObject : tileProperties) {
                     JSONObject property = (JSONObject) propertyObject;
                     String name = (String) property.get("name");
                     if (name.equals("isSolid")) {
-                        tile.isSolid = (boolean) property.get("value");
+                        iTile.isSolid = (boolean) property.get("value");
                     }
                     if (name.equals("mirrorHorizontally")) {
-                        tile.mirrorHorizontally = (boolean) property.get("value");
+                        iTile.mirrorHorizontally = (boolean) property.get("value");
                     }
                     if (name.equals("mirrorVertically")) {
-                        tile.mirrorVertically = (boolean) property.get("value");
+                        iTile.mirrorVertically = (boolean) property.get("value");
                     }
                     if (name.equals("damagePerTick")) {
-                        tile.damagePerTick = Math.toIntExact((Long) property.get("value")) / 1000f;
+                        iTile.damagePerTick = objToInt(property.get("value")) / 1000f;
                     }
                 }
-                tile.apply();
-                this.tiles.put(Integer.toString(id), tile);
+                iTile.apply();
+                TileMapFactory.tiles.put(Integer.toString(id), iTile);
             }
-            this.tiles.forEach((String id, ITile tile) ->
+            TileMapFactory.tiles.forEach((String id, ITile tile) ->
                 System.out.println("[LOADED] ID: " + id + " path: " + tile.image));
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,32 +64,23 @@ public class TileMapFactory extends TileFactory {
 
     public void parseMap(String mapName) {
         System.out.println("[START] parseMap()");
-        JSONParser parser = new JSONParser();
         try {
-            // json simple can't read resource streams
-            InputStream stream = this.getClass().getClassLoader().getResourceAsStream(mapName + ".json");
-            if (stream == null)
-                throw new Exception("getResourceAsStream() returned null");
-            String result = new BufferedReader(new InputStreamReader(stream))
-                .lines().collect(Collectors.joining("\n"));
-            JSONObject tilesMapObj = (JSONObject) parser.parse(result);
-            JSONArray tileMapLayersArr = (JSONArray) tilesMapObj.get("layers");
-            for (Object tileMapLayer : tileMapLayersArr) {
-                JSONObject tileMapLayerObj = (JSONObject) tileMapLayer;
-                String name = (String) tileMapLayerObj.get("name");
-
+            JSONObject tileMap = parseFileToJSONObject(mapName + ".json");
+            JSONArray layers = (JSONArray) tileMap.get("layers");
+            for (Object layerObj : layers) {
+                JSONObject layer = (JSONObject) layerObj;
+                String name = (String) layer.get("name");
                 if (name.equals("foreground")) {
-                    JSONArray tileIDs = (JSONArray) tileMapLayerObj.get("data");
+                    JSONArray tileIDs = (JSONArray) layer.get("data");
 
-                    int height = Math.toIntExact((Long) tileMapLayerObj.get("height"));
-                    int width = Math.toIntExact((Long) tileMapLayerObj.get("width"));
+                    int height = objToInt(layer.get("height"));
+                    int width = objToInt(layer.get("width"));
                     this.map = new int[height][width];
                     int row = 0;
                     int col = 0;
                     for (Object tileID : tileIDs) {
-                        int id = Math.toIntExact((Long) tileID);
+                        int id = objToInt(tileID);
                         this.map[row][col] = id - 1; // JSON export adds 1 to the ID
-
                         col++;
                         if (col >= width) {
                             col = 0;
@@ -110,15 +96,36 @@ public class TileMapFactory extends TileFactory {
         System.out.println("[DONE] parseMap()");
     }
 
+    private JSONObject parseFileToJSONObject(String filename) {
+        try {
+            JSONParser parser = new JSONParser();
+            // json simple can't read resource streams
+            InputStream stream = this.getClass().getClassLoader().getResourceAsStream(filename);
+            if (stream == null)
+                throw new Exception("getResourceAsStream() returned null");
+            String result = new BufferedReader(new InputStreamReader(stream))
+                .lines().collect(Collectors.joining("\n"));
+            return (JSONObject) parser.parse(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        return null;
+    }
+
+    private int objToInt(Object obj) {
+        return Math.toIntExact((Long) obj);
+    }
+
     public int[][] getMap() {
         return map;
     }
 
     @Override
     public Tile createTile(int mapIcon) {
-        ITile tile = tiles.get(Integer.toString(mapIcon));
+        ITile tile = TileMapFactory.tiles.get(Integer.toString(mapIcon));
         if (tile == null)
-            return tiles.get("0").toTile();
+            return TileMapFactory.tiles.get("0").toTile();
         return tile.toTile();
     }
 
@@ -133,20 +140,20 @@ public class TileMapFactory extends TileFactory {
         float damagePerTick;
         String type = "undefined";
 
-        public ITile(String image, int width, int height) {
+        private ITile(String image, int width, int height) {
             this.image = new GreenfootImage(image);
             this.width = width;
             this.height = height;
         }
 
-        public void apply() {
+        private void apply() {
             if (mirrorHorizontally)
                 image.mirrorHorizontally();
             if (mirrorVertically)
                 image.mirrorVertically();
         }
 
-        public ChaseTile toTile() {
+        private ChaseTile toTile() {
             ChaseTile tile = new ChaseTile(this.image, this.width, this.height);
             if (isSolid)
                 tile.isSolid = true;
