@@ -3,11 +3,13 @@ package nl.bastiaanbreemer.chase;
 import greenfoot.Greenfoot;
 import greenfoot.export.GreenfootScenarioMain;
 import nl.bastiaanbreemer.chase.utils.worlds.BaseWorld;
-import nl.bastiaanbreemer.chase.worlds.ChaseWorld;
 import nl.bastiaanbreemer.chase.worlds.GameWon;
+import nl.bastiaanbreemer.chase.worlds.Level1;
+import nl.bastiaanbreemer.chase.worlds.Level2;
 
 public class ChaseApp extends GreenfootScenarioMain {
     public final static int LIVES_MAX = 4;
+    public final static int LEVELS = 3;
     public static ChaseApp application = new ChaseApp();
     public BaseWorld world;
     public int score;
@@ -18,14 +20,43 @@ public class ChaseApp extends GreenfootScenarioMain {
         GreenfootScenarioMain.main(args);
     }
 
-    public void gameOver() {
+    public void reset() {
         lives = LIVES_MAX;
-//        new LoadingWorld();
-        new ChaseWorld();
+        setWorld(new Level1());
+    }
+
+    public void gameOver() {
+        reset();
     }
 
     public void gameWon() {
         setWorld(new GameWon());
+    }
+
+    public void gameNext() {
+        int next = this.world.getId() + 1;
+        if (next > LEVELS) {
+            gameWon();
+            return;
+        }
+        switch (next) {
+            case 1:
+                setWorld(new Level1());
+                System.out.println("Loading level 1");
+                break;
+            case 2:
+                setWorld(new Level2());
+                System.out.println("Loading level 2");
+                break;
+            case 3:
+                setWorld(new Level1());
+                System.out.println("Loading level 3");
+                break;
+            default:
+                setWorld(new Level1());
+                System.out.println("Loading level 1");
+                break;
+        }
     }
 
     public void setWorld(BaseWorld world) {
@@ -45,7 +76,8 @@ public class ChaseApp extends GreenfootScenarioMain {
         this.lives = lives;
     }
 
+
     public static enum State {
-        INITIALIZING, PLAYING, LOADING, READY, WON
+        INITIALIZING, PLAYING, READY, WON
     }
 }

@@ -52,7 +52,7 @@ public class Bomb extends AnimatedMover {
 
         for (Fly fly : getObjectsInRange(this.radius, Fly.class)) {
             if (fly != null)
-                ChaseApp.application.gameWon();
+                ChaseApp.application.gameNext();
         }
         bombs.remove(this);
         getWorld().removeObject(this);

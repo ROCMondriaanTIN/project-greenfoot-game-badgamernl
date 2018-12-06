@@ -9,7 +9,7 @@ import nl.bastiaanbreemer.chase.utils.engine.TileEngine;
 import nl.bastiaanbreemer.chase.utils.pickups.Pickup;
 import nl.bastiaanbreemer.chase.utils.tiles.ChaseTile;
 import nl.bastiaanbreemer.chase.utils.tiles.Tile;
-import nl.bastiaanbreemer.chase.worlds.ChaseWorld;
+import nl.bastiaanbreemer.chase.utils.worlds.BaseWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -199,7 +199,7 @@ public class Chaser extends AnimatedMover {
                 continue;
             switch (types[1]) {
                 case "bomb":
-                    ((ChaseWorld) getWorld()).getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
+                    ((BaseWorld) getWorld()).getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
                     pickups.add(new BombItem());
                     break;
                 default:

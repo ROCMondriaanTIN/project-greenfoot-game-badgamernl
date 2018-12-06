@@ -33,7 +33,7 @@ public class Overlay extends Actor {
     public Overlay(World world, Chaser parent) {
         this.parent = parent;
 //        bomb.scale(, hearts[0].getWidth());
-        // Doing these here (should'nt really by OOP standard but i need the image and this saves allot of mess in ChaseWorld)
+        // Doing these here (should'nt really by OOP standard but i need the image and this saves allot of mess in Level1)
         world.addObject(this, world.getWidth() / 2, world.getHeight() / 2);
         // Setting to a empty image with the world dimensions
         WIDTH = world.getWidth();
@@ -60,8 +60,8 @@ public class Overlay extends Actor {
 //            fontBitMapRenderer.drawText(g2d, " !@#$%^&*()-_?><{}[]\n|\\//:;\"\'\nABCDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcdefghijklm\nnopqrstuvwxyz", 10, 100);
 
             drawBombDamageRadius(g2d);
-        } else if (ChaseApp.application.state == ChaseApp.State.LOADING) {
-            fontBitMapRenderer.drawTextMiddle(g2d, "loading", HEIGHT / 2 - fontBitMapRenderer.letterHeight / 2, WIDTH);
+        } else if (ChaseApp.application.state == ChaseApp.State.INITIALIZING) {
+            fontBitMapRenderer.drawTextMiddle(g2d, "INITIALIZING", HEIGHT / 2 - fontBitMapRenderer.letterHeight / 2, WIDTH);
             fontBitMapRenderer.drawTextMiddle(g2d, "...", HEIGHT / 2 + fontBitMapRenderer.letterHeight / 2, WIDTH);
         } else if (ChaseApp.application.state == ChaseApp.State.WON) {
             fontBitMapRenderer.drawTextMiddle(g2d, "GAME WON", HEIGHT / 2 - fontBitMapRenderer.letterHeight * 2, WIDTH);
