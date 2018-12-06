@@ -22,11 +22,15 @@ public class AnimatedMover extends Mover {
     }
 
     public void setMirrorHorizontally(boolean mirrorHorizontally) {
+        if (this.mirrorHorizontally == mirrorHorizontally)
+            return;
         this.mirrorHorizontally = mirrorHorizontally;
         getImage().mirrorHorizontally();
     }
 
     public void setMirrorVertically(boolean mirrorVertically) {
+        if (this.mirrorVertically == mirrorVertically)
+            return;
         this.mirrorVertically = mirrorVertically;
         getImage().mirrorVertically();
     }
