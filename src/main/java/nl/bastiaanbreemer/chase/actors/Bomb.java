@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Bomb extends AnimatedMover {
 
-    public final static int TIMEOUT = 8;
+    public final static int TIMEOUT = 4;
     private final static String ANIMATION_PATH = "items/%NAME%%FRAME%.png";
     private static ArrayList<Bomb> bombs = new ArrayList<>();
     public final int radius = 125;
@@ -50,6 +50,10 @@ public class Bomb extends AnimatedMover {
             chaser.reset();
         }
 
+        for (Fly fly : getObjectsInRange(this.radius, Fly.class)) {
+            if (fly != null)
+                ChaseApp.application.gameWon();
+        }
         bombs.remove(this);
         getWorld().removeObject(this);
     }

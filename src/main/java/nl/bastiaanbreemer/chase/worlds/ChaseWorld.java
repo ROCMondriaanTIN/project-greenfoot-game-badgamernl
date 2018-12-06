@@ -46,7 +46,7 @@ public class ChaseWorld extends BaseWorld {
 
         // Adding all objects to the world: Camera, Hero, Fly.
         addObject(camera, 0, 0);
-        addObject(chaser, 300, 200);
+        addObject(chaser, chaser.spawnX, chaser.spawnY);
         Fly fly = new Fly(chaser);
         addObject(fly, 10 * TileEngine.TILE_WIDTH, TileEngine.MAP_HEIGHT / 2 * TileEngine.TILE_HEIGHT);
 

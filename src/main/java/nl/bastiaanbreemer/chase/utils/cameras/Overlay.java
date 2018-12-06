@@ -63,6 +63,9 @@ public class Overlay extends Actor {
         } else if (ChaseApp.application.state == ChaseApp.State.LOADING) {
             fontBitMapRenderer.drawTextMiddle(g2d, "loading", HEIGHT / 2 - fontBitMapRenderer.letterHeight / 2, WIDTH);
             fontBitMapRenderer.drawTextMiddle(g2d, "...", HEIGHT / 2 + fontBitMapRenderer.letterHeight / 2, WIDTH);
+        } else if (ChaseApp.application.state == ChaseApp.State.WON) {
+            fontBitMapRenderer.drawTextMiddle(g2d, "GAME WON", HEIGHT / 2 - fontBitMapRenderer.letterHeight * 2, WIDTH);
+            fontBitMapRenderer.drawTextMiddle(g2d, "enter to restart", HEIGHT / 2 + fontBitMapRenderer.letterHeight * 2, WIDTH);
         }
     }
 
