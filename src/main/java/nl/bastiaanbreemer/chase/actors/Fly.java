@@ -22,10 +22,12 @@ public class Fly extends AnimatedMover {
 
     @Override
     public void act() {
-        if (direction == 0) {
+        if (getX() <= 0) {
+        if (velocityX > 0) {
             setMirrorHorizontally(true);
-        } else if (direction == 1)
+        } else {
             setMirrorHorizontally(false);
+        }
         super.act();
 
 //        float distance = (float) Math.hypot(getX() - chaser.getX(), getY() - chaser.getY()) / TileEngine.TILE_WIDTH;

@@ -253,9 +253,9 @@ public class Chaser extends AnimatedMover {
             handleDamage();
         handleAnimations();
         if (direction == 0)
-            setMirrorHorizontally(true);
-        else if (direction == 1)
             setMirrorHorizontally(false);
+        else if (direction == 1)
+            setMirrorHorizontally(true);
         super.act();
         velocityX *= drag;
         velocityY += acc;
@@ -265,7 +265,6 @@ public class Chaser extends AnimatedMover {
         if (tick % 60 == 0)
             handleSound();
         applyVelocity();
-        getImage().mirrorHorizontally();
     }
 }
 
