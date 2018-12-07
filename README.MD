@@ -8,10 +8,14 @@ Game gemaakt in Greenfoot waarbij je de andere speler moet vangen want hij heeft
 * [x] Animations
 * [x] Loading of tiles via `json`
 * [x] Loading of map via `json`
-  * [ ] Switching between maps
+  * [x] Switching between maps
 * [x] Fly that you need to chase
   * [x] Flies away
-  * [ ] Kill fly with bomb
-* [ ] Collectables
-  * [ ] Levens
+  * [x] Kill fly with bomb
+* [x] Collectables
+  * [x] Levens
+  * [x] Bombs
   * [ ] Jump boots
+* [x] Parralax background
+* [x] Tile texture resize
+* [x] End screen if game won
