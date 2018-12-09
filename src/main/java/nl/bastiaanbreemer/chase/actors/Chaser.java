@@ -9,7 +9,6 @@ import nl.bastiaanbreemer.chase.utils.engine.TileEngine;
 import nl.bastiaanbreemer.chase.utils.pickups.Pickup;
 import nl.bastiaanbreemer.chase.utils.tiles.ChaseTile;
 import nl.bastiaanbreemer.chase.utils.tiles.Tile;
-import nl.bastiaanbreemer.chase.utils.worlds.BaseWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +128,7 @@ public class Chaser extends AnimatedMover {
             }
         }
 
-        if ((Greenfoot.isKeyDown("w") && !isCrouching) || (Greenfoot.isKeyDown("space") && !isCrouching)) {
+        if (Greenfoot.isKeyDown("space") && !isCrouching) {
             int pixelYOffset = (getImage().getHeight() / 2);
 
             if (isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset))
@@ -170,6 +169,9 @@ public class Chaser extends AnimatedMover {
         if (Greenfoot.isKeyDown("escape")) {
             System.exit(0);
         }
+        if (Greenfoot.isKeyDown("n")) {
+            ChaseApp.application.gameNext();
+        }
     }
 
     private void handleDamage() {
@@ -199,7 +201,7 @@ public class Chaser extends AnimatedMover {
                 continue;
             switch (types[1]) {
                 case "bomb":
-                    ((BaseWorld) getWorld()).getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
+                    ChaseApp.application.world.getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
                     pickups.add(new BombItem());
                     break;
                 case "mushroom":
@@ -254,7 +256,7 @@ public class Chaser extends AnimatedMover {
         tick++;
         handlePickup();
         handleInput();
-        if (tick % 30 == 0)
+        if (tick % 20 == 0)
             handleDamage();
         handleAnimations();
         if (direction == 0)
@@ -269,6 +271,8 @@ public class Chaser extends AnimatedMover {
         }
         if (tick % 60 == 0)
             handleSound();
+        if (getX() < 0 || getX() > TileEngine.MAP_WIDTH * TileEngine.TILE_WIDTH)
+            velocityX *= -1;
         applyVelocity();
     }
 }
