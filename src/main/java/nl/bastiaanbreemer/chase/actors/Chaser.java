@@ -202,6 +202,11 @@ public class Chaser extends AnimatedMover {
                     ((BaseWorld) getWorld()).getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
                     pickups.add(new BombItem());
                     break;
+                case "mushroom":
+                    if (ChaseApp.application.getLives() >= ChaseApp.LIVES_MAX)
+                        break;
+                    ChaseApp.application.world.getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
+                    ChaseApp.application.setLives(ChaseApp.application.getLives() + 1);
                 default:
                     break;
             }

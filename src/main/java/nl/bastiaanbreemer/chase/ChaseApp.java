@@ -6,6 +6,7 @@ import nl.bastiaanbreemer.chase.utils.worlds.BaseWorld;
 import nl.bastiaanbreemer.chase.worlds.GameWon;
 import nl.bastiaanbreemer.chase.worlds.Level1;
 import nl.bastiaanbreemer.chase.worlds.Level2;
+import nl.bastiaanbreemer.chase.worlds.Level3;
 
 public class ChaseApp extends GreenfootScenarioMain {
     public final static int LIVES_MAX = 4;
@@ -34,28 +35,29 @@ public class ChaseApp extends GreenfootScenarioMain {
     }
 
     public void gameNext() {
+        System.out.println(this.world.getId());
         int next = this.world.getId() + 1;
         if (next > LEVELS) {
-            gameWon();
+            setWorld(new GameWon());
             return;
         }
         switch (next) {
             case 1:
                 setWorld(new Level1());
                 System.out.println("Loading level 1");
-                break;
+                return;
             case 2:
                 setWorld(new Level2());
                 System.out.println("Loading level 2");
-                break;
+                return;
             case 3:
-                setWorld(new Level1());
+                setWorld(new Level3());
                 System.out.println("Loading level 3");
-                break;
+                return;
             default:
                 setWorld(new Level1());
                 System.out.println("Loading level 1");
-                break;
+                return;
         }
     }
 

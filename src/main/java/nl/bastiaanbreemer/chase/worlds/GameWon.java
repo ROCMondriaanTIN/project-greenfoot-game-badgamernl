@@ -27,13 +27,16 @@ public class GameWon extends BaseWorld {
 
         te.setMap(tmf.getMap());
         pb.updateMap();
+
         Camera camera = new Camera(te);
         Chaser chaser = new Chaser(TileEngine.TILE_WIDTH * 10, TileEngine.TILE_HEIGHT * 9);
         camera.follow(chaser);
         pb.setParent(chaser);
+
         Overlay overlay = new Overlay(this, chaser);
         addObject(camera, 0, 0);
         addObject(chaser, chaser.spawnX, chaser.spawnY);
+
         Greenfoot.setSpeed(60);
 
         ce = new CollisionEngine(te, camera);

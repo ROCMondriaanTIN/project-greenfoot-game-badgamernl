@@ -5258,7 +5258,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"decoration"
+         "type":"pickup\/mushroom"
         }, 
         {
          "id":454,
@@ -5286,7 +5286,7 @@
                  "type":"bool",
                  "value":false
                 }],
-         "type":"decoration"
+         "type":"pickup\/mushroom"
         }, 
         {
          "id":455,

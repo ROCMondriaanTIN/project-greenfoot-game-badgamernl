@@ -1684,7 +1684,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/keyYellow.png"/>
  </tile>
- <tile id="453" type="decoration">
+ <tile id="453" type="pickup/mushroom">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
@@ -1693,7 +1693,7 @@
   </properties>
   <image width="70" height="70" source="images/tiles/mushroomBrown.png"/>
  </tile>
- <tile id="454" type="decoration">
+ <tile id="454" type="pickup/mushroom">
   <properties>
    <property name="damagePerTick" type="int" value="0"/>
    <property name="isSolid" type="bool" value="false"/>
