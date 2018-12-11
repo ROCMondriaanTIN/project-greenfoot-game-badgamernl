@@ -70,9 +70,9 @@ public class Chaser extends AnimatedMover {
         pickups.add(new BombItem());
         pickups.add(new BombItem());
         pickups.add(new BombItem());
-
         this.setHealth(HEALTH_MAX);
-        setLives(ChaseApp.application.getLives() - 1);
+        if (tick != 0)
+            setLives(ChaseApp.application.getLives() - 1);
     }
 
     public float getHealth() {
