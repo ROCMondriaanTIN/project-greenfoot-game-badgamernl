@@ -8,6 +8,8 @@ import nl.bastiaanbreemer.chase.worlds.Level1;
 import nl.bastiaanbreemer.chase.worlds.Level2;
 import nl.bastiaanbreemer.chase.worlds.Level3;
 
+import java.util.HashMap;
+
 public class ChaseApp extends GreenfootScenarioMain {
     public final static int LIVES_MAX = 4;
     public final static int LEVELS = 3;
@@ -17,8 +19,46 @@ public class ChaseApp extends GreenfootScenarioMain {
     public int lives = LIVES_MAX;
     public State state = State.INITIALIZING;
 
+    private HashMap<String, Boolean> keyDown = new HashMap<>();
+
     public static void main(String[] args) {
         GreenfootScenarioMain.main(args);
+    }
+
+    public boolean isKeyDown(String key) {
+        if (!keyDown.containsKey(key))
+            setGreenfootKeyDown(key);
+        return keyDown.get(key);
+    }
+
+    public boolean hasKeyGoneUp(String key) {
+        boolean prev = isKeyDown(key);
+        boolean current = Greenfoot.isKeyDown(key);
+        boolean goneUp = false;
+        if (prev && !current) {
+            goneUp = true;
+        }
+        setGreenfootKeyDown(key, current);
+        return goneUp;
+    }
+
+    public boolean hasKeyGoneDown(String key) {
+        boolean prev = isKeyDown(key);
+        boolean current = Greenfoot.isKeyDown(key);
+        boolean goneDown = false;
+        if (!prev && current) {
+            goneDown = true;
+        }
+        setGreenfootKeyDown(key, current);
+        return goneDown;
+    }
+
+    public void setGreenfootKeyDown(String key) {
+        this.keyDown.put(key, Greenfoot.isKeyDown(key));
+    }
+
+    public void setGreenfootKeyDown(String key, boolean down) {
+        this.keyDown.put(key, down);
     }
 
     public void reset() {

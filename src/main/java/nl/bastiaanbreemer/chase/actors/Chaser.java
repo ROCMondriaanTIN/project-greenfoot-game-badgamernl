@@ -27,7 +27,6 @@ public class Chaser extends AnimatedMover {
     private boolean isCrouching = false;
     private boolean isSprinting = false;
     private int direction = 0;
-    private int pickupUseTimeout = 0;
     private int tick = 0;
 
     public Chaser(int spawnX, int spawnY) {
@@ -112,9 +111,7 @@ public class Chaser extends AnimatedMover {
     }
 
     public void handleInput() {
-        if (pickupUseTimeout > 0)
-            pickupUseTimeout--;
-        if (pickupUseTimeout == 0 && Greenfoot.isKeyDown("b")) {
+        if (ChaseApp.application.hasKeyGoneDown("b")) {
             for (Pickup pickup : pickups) {
                 if (!pickup.type.equals("bomb"))
                     continue;
@@ -123,12 +120,11 @@ public class Chaser extends AnimatedMover {
                 getWorld().addObject(bomb, 0, 0);
                 bomb.setLocation(getX(), getY() + 1);
                 pickups.remove(pickup);
-                pickupUseTimeout = pickup.getTimeout();
                 break;
             }
         }
 
-        if (Greenfoot.isKeyDown("space") && !isCrouching) {
+        if ((ChaseApp.application.hasKeyGoneDown("space") || ChaseApp.application.hasKeyGoneDown("w")) && !isCrouching) {
             int pixelYOffset = (getImage().getHeight() / 2);
 
             if (isTileSolidAtOffset(-(getWidth() / 2) + 1, pixelYOffset))
@@ -163,13 +159,16 @@ public class Chaser extends AnimatedMover {
             isSprinting = false;
         }
 
-        if (Greenfoot.isKeyDown("k")) {
+        if (ChaseApp.application.hasKeyGoneDown("k")) {
             this.setLives(-1);
+        }
+        if (ChaseApp.application.hasKeyGoneDown(".")) {
+            pickups.add(new BombItem());
         }
         if (Greenfoot.isKeyDown("escape")) {
             System.exit(0);
         }
-        if (Greenfoot.isKeyDown("n")) {
+        if (ChaseApp.application.hasKeyGoneDown("n")) {
             ChaseApp.application.gameNext();
         }
     }
@@ -207,6 +206,7 @@ public class Chaser extends AnimatedMover {
                 case "mushroom":
                     if (ChaseApp.application.getLives() >= ChaseApp.LIVES_MAX)
                         break;
+                    setHealth(HEALTH_MAX);
                     ChaseApp.application.world.getTileEngine().removeTileAt(tile.getColom(), tile.getRow());
                     ChaseApp.application.setLives(ChaseApp.application.getLives() + 1);
                 default:

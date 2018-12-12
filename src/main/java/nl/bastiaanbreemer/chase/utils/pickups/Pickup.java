@@ -6,25 +6,18 @@ public class Pickup {
 
     public final String type;
     protected final GreenfootImage image;
-    private final int timeout;
 
-    public Pickup(String image, String type, int timeout) {
+    public Pickup(String image, String type) {
         this.image = new GreenfootImage(image);
         this.type = type;
-        this.timeout = timeout;
     }
 
-    public Pickup(GreenfootImage image, String type, int timeout) {
+    public Pickup(GreenfootImage image, String type) {
         this.image = image;
         this.type = type;
-        this.timeout = timeout;
     }
 
     public GreenfootImage getImage() {
         return this.image;
-    }
-
-    public int getTimeout() {
-        return this.timeout;
     }
 }
